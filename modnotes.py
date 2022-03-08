@@ -18,11 +18,11 @@ def get_blob_wiki(notes):
     return json.loads(notes)["blob"]
 
 
-def js_byte_to_string(data):
+def js_byte_to_string(data: bytes) -> str:
     return data.decode("utf-8")
 
 
-def pInflate(data):
+def pInflate(data) -> bytes:
     decompress = zlib.decompressobj(15)
     decompressed_data = decompress.decompress(data)
     decompressed_data += decompress.flush()
