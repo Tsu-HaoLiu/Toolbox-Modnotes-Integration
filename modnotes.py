@@ -1,4 +1,3 @@
-from urllib.parse import quote, unquote
 import praw
 import base64
 import zlib
