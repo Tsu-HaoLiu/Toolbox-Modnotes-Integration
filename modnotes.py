@@ -4,7 +4,6 @@ import base64
 import zlib
 import json
 
-
 praw_config = {
     'user_agent': '/u/USERNAME Toolbox to Modnotes'
 }
