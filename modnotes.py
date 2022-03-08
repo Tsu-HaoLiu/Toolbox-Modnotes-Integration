@@ -14,7 +14,7 @@ r = praw.Reddit('indexbot', **praw_config)  # praw auth w/ praw.ini
 subreddit = ''  # subreddit name here without r/
 
 
-def get_blob_wiki(notes):
+def get_blob_wiki(notes: str) -> str:
     return json.loads(notes)["blob"]
 
 
