@@ -3,9 +3,23 @@ Convert Toolbox Usernotes to Modnotes
 
 
 
-## OAuth
+## [PRAW Authenticating via OAuth](https://praw.readthedocs.io/en/stable/getting_started/authentication.html)
+  
+**Password Flow** is the simplest type of authentication flow to work with because no
+callback process is involved in obtaining an ``access_token``.
 
-https://praw.readthedocs.io/en/stable/getting_started/authentication.html
+While **password flow** applications do not involve a redirect URI, Reddit still
+requires that you provide one when registering your script application --
+``http://localhost:8080`` is a simple one to use.
+
+In order to use a **password flow** application with PRAW you need four pieces of
+information:
+||Description|    
+| ------------- | ------------- |
+| client_id  | The client ID is the 14-character string listed just under “personal use script” for the desired [developed application](https://www.reddit.com/prefs/apps/)  |
+| client_secret  | The client secret is at least a 27-character string listed adjacent to `secret` for the application.  |
+| password  | The password for the Reddit account used to register the application.  |
+| username  | The username of the Reddit account used to register the application.  |
 
 ```
 reddit = praw.Reddit(
@@ -23,8 +37,6 @@ reddit = praw.Reddit(
 ```
 pip3 install -r requirements.txt
 ```
-#
-
 
 ```
 # Enter the subreddit you should like to transfer the notes from (Line 12)
