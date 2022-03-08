@@ -32,6 +32,11 @@ def pInflate(data) -> bytes:
     return decompressed_data
   
   
+def get_usernotes_wiki(sub):
+    wiki = r.subreddit(sub).wiki["usernotes"]
+    return wiki.content_md
+
+
 def delete_notes(subreddit, user, note_id):
     """Function to delete notes from a user
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
