@@ -38,7 +38,7 @@ def delete_notes(subreddit, user, note_id) -> dict:
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
     :param user: a fullname of an account (should have a t2_ prefix)
     :param note_id: a unique ID for the note to be deleted (should have a ModNote_ prefix)
-    :return: dict
+    :return: Unknown
     """
     data = {"subreddit_id": subreddit, "user_id": user, "note_id": note_id}
     return r.request("DELETE", note_api, data)
@@ -53,7 +53,7 @@ def get_notes(subreddit, user, limit: int = 25, label: str = None, before: str =
     :param label: (optional) NOTE, APPROVAL, REMOVAL, BAN, MUTE, INVITE, SPAM, CONTENT_CHANGE, MOD_ACTION, ALL,
      to be used for querying specific types of mod notes (default: all)
     :param before: (optional) an encoded string used for pagination with mod notes
-    :return: dict
+    :return: Function will return a dict with all mod notes info regarding specific user
     """
     data = {"subreddit_id": subreddit, "user_id": user, "limit": limit, "label": label, "before": before}
     return r.request("GET", note_api, data)
@@ -67,7 +67,7 @@ def create_notes(subreddit, user, note, action_item: str = None, label: str = No
     :param note: Content of the note, should be a string with a maximum character limit of 250
     :param action_item: (optional) a fullname of a comment or post (should have either a t1 or t3 prefix)
     :param label: (optional) BOT_BAN, PERMA_BAN, BAN, ABUSE_WARNING, SPAM_WARNING, SPAM_WATCH, SOLID_CONTRIBUTOR, HELPFUL_USER
-    :return: dict
+    :return: Unknown
     """
     data = {"subreddit_id": subreddit, "user_id": user, "note": note, "reddit_id": action_item, "label": label}
     return r.request("POST", note_api, data)
