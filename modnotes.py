@@ -22,6 +22,10 @@ def js_byte_to_string(data: bytes) -> str:
     return data.decode("utf-8")
 
 
+def b64d(data: str) -> bytes:
+    return base64.b64decode(data)
+
+
 def pInflate(data) -> bytes:
     decompress = zlib.decompressobj(15)
     decompressed_data = decompress.decompress(data)
