@@ -32,7 +32,7 @@ def pInflate(data) -> bytes:
     return decompressed_data
   
   
-def delete_notes(subreddit, user, note_id) -> dict:
+def delete_notes(subreddit, user, note_id):
     """Function to delete notes from a user
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
     :param user: a fullname of an account (should have a t2_ prefix)
@@ -58,7 +58,7 @@ def get_notes(subreddit, user, limit: int = 25, label: str = None, before: str =
     return r.request("GET", note_api, data)
 
 
-def create_notes(subreddit, user, note, action_item: str = None, label: str = None) -> dict:
+def create_notes(subreddit, user, note, action_item: str = None, label: str = None):
     """Create a mod note for a particular user
 
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
