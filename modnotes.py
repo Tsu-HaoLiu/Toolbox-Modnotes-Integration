@@ -12,6 +12,7 @@ praw_config = {
 r = praw.Reddit('indexbot', **praw_config)  # praw auth w/ praw.ini
 
 subreddit = ''  # subreddit name here without r/
+note_api = "/api/mod/notes"
 
 
 def get_blob_wiki(notes: str) -> str:
@@ -94,6 +95,7 @@ def blob_to_string(blob: str) -> dict:
 def main(subreddit):
     usernotes = get_usernotes_wiki(subreddit)
     print(blob_to_string(get_blob_wiki(usernotes)))
+    # todo implement automatic modnote with toolbox information
 
   
 if __name__ == '__main__':
