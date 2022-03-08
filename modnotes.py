@@ -31,24 +31,6 @@ def pInflate(data) -> bytes:
     decompressed_data = decompress.decompress(data)
     decompressed_data += decompress.flush()
     return decompressed_data
-
-
-def blob_to_string(blob: str) -> dict:
-    """
-    Decode toolbox's base64encode + zlib compression 
-    Base64 -> zlib-compressed -> string -> dict
-    """
-    # base64 decode blob
-    zcomp = b64d(blob)
-    
-    # zlib-uncompress to byte
-    uncomp_bytes = pInflate(zcomp)
-    
-    # byte to string
-    cstring = js_byte_to_string(uncomp_bytes)
-    
-    # Return dict
-    return json.loads(cstring)
   
   
 def delete_notes(subreddit, user, note_id) -> dict:
@@ -89,6 +71,24 @@ def create_notes(subreddit, user, note, action_item: str = None, label: str = No
     """
     data = {"subreddit_id": subreddit, "user_id": user, "note": note, "reddit_id": action_item, "label": label}
     return r.request("POST", note_api, data)
+
+
+def blob_to_string(blob: str) -> dict:
+    """
+    Decode toolbox's base64encode + zlib compression 
+    Base64 -> zlib-compressed -> string -> dict
+    """
+    # base64 decode blob
+    zcomp = b64d(blob)
+    
+    # zlib-uncompress to byte
+    uncomp_bytes = pInflate(zcomp)
+    
+    # byte to string
+    cstring = js_byte_to_string(uncomp_bytes)
+    
+    # Return dict
+    return json.loads(cstring)
 
 
 def main(subreddit):
