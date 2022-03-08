@@ -18,6 +18,17 @@ def get_blob_wiki(notes):
     return json.loads(notes)["blob"]
 
 
+def js_byte_to_string(data):
+    return data.decode("utf-8")
+
+
+def pInflate(data):
+    decompress = zlib.decompressobj(15)
+    decompressed_data = decompress.decompress(data)
+    decompressed_data += decompress.flush()
+    return decompressed_data
+
+
 def blob_to_string(blob: str) -> dict:
     """
     Decode toolbox's base64encode + zlib compression 
