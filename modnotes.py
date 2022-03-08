@@ -32,8 +32,8 @@ def pInflate(data) -> bytes:
     return decompressed_data
   
   
-def get_usernotes_wiki(sub):
-    wiki = r.subreddit(sub).wiki["usernotes"]
+def get_usernotes_wiki(subreddit):
+    wiki = r.subreddit(subreddit).wiki["usernotes"]
     return wiki.content_md
 
 
