@@ -1,7 +1,5 @@
 # Toolbox-Modnotes-Integration
-Convert Toolbox Usernotes to Modnotes
-
-
+Convert Toolbox Usernotes to Modnotes. Recent announcement of [Modnotes](https://www.reddit.com/r/modnews/comments/t8vafc/announcing_mod_notes/).
 
 ## [PRAW Authenticating via OAuth](https://praw.readthedocs.io/en/stable/getting_started/authentication.html)
   
