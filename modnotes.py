@@ -116,7 +116,7 @@ def main(subreddit):
     usernotes = get_usernotes_wiki(subreddit)
     cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
     process_notes(cleaned_notes)
-    # todo implement automatic modnote with toolbox information
+    # todo since Reddit is funky, add try except for safety
 
   
 if __name__ == '__main__':
