@@ -34,9 +34,7 @@ reddit = praw.Reddit(
 
 ```
 pip3 install -r requirements.txt
-```
 
-```
-# Enter the subreddit you should like to transfer the notes from (Line 12)
+# On `Line 12` enter the subreddit you would like to transfer the notes from
 subreddit = ''  # subreddit name here without r/
 ```
