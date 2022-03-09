@@ -98,11 +98,24 @@ def blob_to_string(blob: str) -> dict:
 def note_name_generator(notes):
     for key, value in notes.items():
         yield key, value
+        
+        
+def process_notes(notes):
+    sub_id = r.subreddit(subreddit).id
 
+    for note_info in note_name_generator(notes):
+        note_gather = note_info[1]['ns'][0]
 
+        user_id = r.redditor(note_info[0]).id  # api call
+        note = note_gather['n']
+        action_item = note_gather['l']
+        create_notes(sub_id, user_id, note, action_item)
+
+        
 def main(subreddit):
     usernotes = get_usernotes_wiki(subreddit)
-    print(blob_to_string(get_blob_wiki(usernotes)))
+    cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
+    
     # todo implement automatic modnote with toolbox information
 
   
