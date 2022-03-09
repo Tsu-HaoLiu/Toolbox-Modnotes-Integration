@@ -115,7 +115,7 @@ def process_notes(notes):
 def main(subreddit):
     usernotes = get_usernotes_wiki(subreddit)
     cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
-    
+    process_notes(cleaned_notes)
     # todo implement automatic modnote with toolbox information
 
   
