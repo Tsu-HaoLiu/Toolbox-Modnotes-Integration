@@ -95,6 +95,11 @@ def blob_to_string(blob: str) -> dict:
     return json.loads(cstring)
 
 
+def note_name_generator(notes):
+    for key, value in notes.items():
+        yield key, value
+
+
 def main(subreddit):
     usernotes = get_usernotes_wiki(subreddit)
     print(blob_to_string(get_blob_wiki(usernotes)))
