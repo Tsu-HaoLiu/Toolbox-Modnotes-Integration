@@ -91,9 +91,9 @@ def blob_to_string(blob: str) -> dict:
     return json.loads(cstring)
 
   
-def get_usernotes_wiki():
+def get_usernotes_wiki(sub):
     """Retrive usernotes from subreddit wiki"""
-    return subobj.wiki["usernotes"].wiki.content_md
+    return sub.wiki["usernotes"].wiki.content_md
 
 
 def note_name_generator(notes):
@@ -119,18 +119,20 @@ def safe_checks():
     assert subreddit, "Subreddit name was not entered"
     
     try:
-        subobj = r.subreddit(subreddit)
+        sub = r.subreddit(subreddit)
     except prawcore.Redirect:
         raise NameError(f"modnotes.py subreddit banned/private or doesn't exist")
     
-    mod_list = subobj.moderator()
+    mod_list = sub.moderator()
+    print(sub.display_name)
     if r.user.me().name not in mod_list:
-        raise ReferenceError(f"modnotes.py you are not a mod of r/{subobj.display_name}")
+        raise ReferenceError(f"modnotes.py you are not a mod of r/{sub.display_name}")
+
+    main(sub)
     
-    main()
         
-def main():
-    usernotes = get_usernotes_wiki()
+def main(sub):
+    usernotes = get_usernotes_wiki(sub)
     cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
     process_notes(cleaned_notes)
 
