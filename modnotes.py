@@ -1,4 +1,4 @@
-import os
+import os, sys
 import praw, prawcore
 import base64
 import zlib
@@ -52,7 +52,7 @@ def get_notes(user, limit: int = 25, label: str = None, before: str = None) -> d
     :param user: a fullname of an account (should have a t2_ prefix)
     :param limit: (optional) the number of mod notes to return in the response payload (default: 25, max: 100)
     :param label: (optional) NOTE, APPROVAL, REMOVAL, BAN, MUTE, INVITE, SPAM, CONTENT_CHANGE, MOD_ACTION, ALL,
-     to be used for querying specific types of mod notes (default: all)
+    to be used for querying specific types of mod notes (default: all)
     :param before: (optional) an encoded string used for pagination with mod notes
     :return: Function will return a dict with all mod notes info regarding specific user
     """
@@ -91,7 +91,7 @@ def blob_to_string(blob: str) -> dict:
     # Return dict
     return json.loads(cstring)
 
-  
+
 def get_usernotes_wiki(sub):
     """Retrive usernotes from subreddit wiki"""
     return sub.wiki["usernotes"].content_md
@@ -139,7 +139,7 @@ def main(sub):
     cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
     process_notes(sub.fullname, cleaned_notes)
 
-  
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         raise TypeError(f"modnotes.py takes one argument ({len(sys.argv)-1} given)")
