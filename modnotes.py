@@ -130,7 +130,7 @@ def safe_checks():
     main()
         
 def main():
-    usernotes = get_usernotes_wiki(subreddit)
+    usernotes = get_usernotes_wiki()
     cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
     process_notes(cleaned_notes)
 
