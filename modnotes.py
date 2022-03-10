@@ -10,6 +10,7 @@ praw_config = {
 r = praw.Reddit('indexbot', **praw_config)  # praw auth w/ praw.ini
 
 subreddit = ''  # subreddit name here without r/
+subobj = ''
 note_api = "/api/mod/notes"
 
 
@@ -31,13 +32,8 @@ def pInflate(data) -> bytes:
     decompressed_data += decompress.flush()
     return decompressed_data
   
-  
-def get_usernotes_wiki(subreddit):
-    wiki = r.subreddit(subreddit).wiki["usernotes"]
-    return wiki.content_md
-
-
-def delete_notes(subreddit, user, note_id):
+    
+def delete_notes(user, note_id):
     """Function to delete notes from a user
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
     :param user: a fullname of an account (should have a t2_ prefix)
@@ -48,7 +44,7 @@ def delete_notes(subreddit, user, note_id):
     return r.request("DELETE", note_api, data)
 
 
-def get_notes(subreddit, user, limit: int = 25, label: str = None, before: str = None) -> dict:
+def get_notes(user, limit: int = 25, label: str = None, before: str = None) -> dict:
     """ Function to retrieve specific user notes from a given subreddit
 
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
@@ -63,7 +59,7 @@ def get_notes(subreddit, user, limit: int = 25, label: str = None, before: str =
     return r.request("GET", note_api, data)
 
 
-def create_notes(subreddit, user, note, action_item: str = None, label: str = None):
+def create_notes(user, note, action_item: str = None, label: str = None):
     """Create a mod note for a particular user
 
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
@@ -94,6 +90,11 @@ def blob_to_string(blob: str) -> dict:
     # Return dict
     return json.loads(cstring)
 
+  
+def get_usernotes_wiki():
+    """Retrive usernotes from subreddit wiki"""
+    return subobj.wiki["usernotes"].wiki.content_md
+
 
 def note_name_generator(notes):
     for key, value in notes.items():
@@ -112,12 +113,30 @@ def process_notes(notes):
         create_notes(sub_id, user_id, note, action_item)
 
         
-def main(subreddit):
+def safe_checks():
+    """Checks if the subreddit entered is valid and that you moderate it"""
+    
+    assert subreddit, "Subreddit name was not entered"
+    
+    try:
+        subobj = r.subreddit(subreddit)
+    except prawcore.Redirect:
+        raise NameError(f"modnotes.py subreddit banned/private or doesn't exist")
+    
+    mod_list = subobj.moderator()
+    if r.user.me().name not in mod_list:
+        raise ReferenceError(f"modnotes.py you are not a mod of r/{subobj.display_name}")
+    
+    main()
+        
+def main():
     usernotes = get_usernotes_wiki(subreddit)
     cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
     process_notes(cleaned_notes)
-    # todo since Reddit is funky, add try except for safety
 
   
 if __name__ == '__main__':
-    main(subreddit)
+    if len(sys.argv) != 2:
+        raise TypeError(f"modnotes.py takes one argument ({len(sys.argv)-1} given)")
+    subreddit = sys.argv[1]
+    safe_checks()
