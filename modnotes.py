@@ -1,4 +1,5 @@
-import praw
+import os
+import praw, prawcore
 import base64
 import zlib
 import json
