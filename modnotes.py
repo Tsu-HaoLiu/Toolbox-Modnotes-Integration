@@ -136,7 +136,7 @@ def safe_checks():
 def main(sub):
     usernotes = get_usernotes_wiki(sub)
     cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
-    process_notes(sub.id, cleaned_notes)
+    process_notes(sub.fullname, cleaned_notes)
 
   
 if __name__ == '__main__':
