@@ -32,7 +32,7 @@ def pInflate(data) -> bytes:
     decompressed_data = decompress.decompress(data)
     decompressed_data += decompress.flush()
     return decompressed_data
-  
+
     
 def delete_notes(user, note_id):
     """Function to delete notes from a user
