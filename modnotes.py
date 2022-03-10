@@ -93,7 +93,7 @@ def blob_to_string(blob: str) -> dict:
   
 def get_usernotes_wiki(sub):
     """Retrive usernotes from subreddit wiki"""
-    return sub.wiki["usernotes"].wiki.content_md
+    return sub.wiki["usernotes"].content_md
 
 
 def note_name_generator(notes):
