@@ -101,13 +101,15 @@ def note_name_generator(notes):
         yield key, value
         
         
-def process_notes(notes):
-    sub_id = r.subreddit(subreddit).id
+def process_notes(sub_id, notes):
 
     for note_info in note_name_generator(notes):
         note_gather = note_info[1]['ns'][0]
-
-        user_id = r.redditor(note_info[0]).id  # api call
+        try:
+            user_id = r.redditor(note_info[0]).id  # api call
+        except Exception:
+            print(f"User is banned/deactivated")
+            continue
         note = note_gather['n']
         action_item = note_gather['l']
         create_notes(sub_id, user_id, note, action_item)
@@ -134,7 +136,7 @@ def safe_checks():
 def main(sub):
     usernotes = get_usernotes_wiki(sub)
     cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
-    process_notes(cleaned_notes)
+    process_notes(sub.id, cleaned_notes)
 
   
 if __name__ == '__main__':
