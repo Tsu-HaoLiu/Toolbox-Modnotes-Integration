@@ -134,13 +134,16 @@ def process_notes(sub_id, full_notes, notes):
 
 def safe_checks():
     """Checks if the subreddit entered is valid and that you moderate it"""
-    assert subreddit, "Subreddit name was not entered"
+
+    if not subreddit or " " in subreddit: raise SystemExit("NameError: Subreddit name entered incorrectly")
     
     try:
         sub = r.subreddit(subreddit)
         mod_list = sub.moderator()
-    except prawcore.exceptions.Redirect:
-        raise SystemExit(f"NameError: r/{subreddit} is banned/private or doesn't exist")
+    except Exception as e:
+        print(str(e))
+        if not any(keyword in str(e) for keyword in ["500 HTTP", "502 HTTP", "503 HTTP", "504 HTTP", "RequestException"]):
+            raise SystemExit(f"NameError: r/{subreddit} is banned/private or doesn't exist")
     
     if r.user.me().name not in mod_list:
         raise SystemExit(f"PermissionError: You are not a mod of r/{sub.display_name}")
@@ -156,6 +159,6 @@ def main(sub):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        raise SystemExit(f"TypeError: modnotes.py takes one argument ({len(sys.argv)-1} given)")
-    subreddit = sys.argv[1]
+        raise SystemExit(f"TypeError: {sys.argv[0]} takes one argument ({len(sys.argv)-1} given)")
+    subreddit = sys.argv[1] if "r/" not in sys.argv[1] else sys.argv[1].strip("r/")
     safe_checks()
