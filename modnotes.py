@@ -72,7 +72,7 @@ def create_notes(user, note, action_item: str = None, label: str = None):
     # NOTE `reddit_id` and `label` are not valid parameters for /api/mod/notes
     # "reddit_id": action_item, "label": label
     """
-    data = {"subreddit_id": subreddit, "user_id": user, "note": note, "reddit_id": action_item, "label": label}
+    data = {"subreddit_id": subreddit, "user_id": user, "note": note}
     return r.request("POST", note_api, data)
 
 
