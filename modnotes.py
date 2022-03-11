@@ -1,4 +1,4 @@
-import os, sys
+import sys
 import praw, prawcore
 import base64
 import zlib
@@ -11,7 +11,6 @@ praw_config = {
 r = praw.Reddit('indexbot', **praw_config)  # praw auth w/ praw.ini
 
 subreddit = ''  # subreddit name here without r/
-subobj = ''
 note_api = "/api/mod/notes"
 
 
@@ -34,18 +33,18 @@ def pInflate(data) -> bytes:
     return decompressed_data
 
     
-def delete_notes(user, note_id):
+def delete_notes(sub_id, user, note_id):
     """Function to delete notes from a user
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
     :param user: a fullname of an account (should have a t2_ prefix)
     :param note_id: a unique ID for the note to be deleted (should have a ModNote_ prefix)
     :return: Unknown
     """
-    data = {"subreddit_id": subreddit, "user_id": user, "note_id": note_id}
+    data = {"subreddit_id": sub_id, "user_id": user, "note_id": note_id}
     return r.request("DELETE", note_api, data)
 
 
-def get_notes(user, limit: int = 25, label: str = None, before: str = None) -> dict:
+def get_notes(sub_id, user, limit: int = 25, label: str = None, before: str = None) -> dict:
     """ Function to retrieve specific user notes from a given subreddit
 
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
@@ -56,11 +55,11 @@ def get_notes(user, limit: int = 25, label: str = None, before: str = None) -> d
     :param before: (optional) an encoded string used for pagination with mod notes
     :return: Function will return a dict with all mod notes info regarding specific user
     """
-    data = {"subreddit_id": subreddit, "user_id": user, "limit": limit, "label": label, "before": before}
+    data = {"subreddit_id": sub_id, "user_id": user, "limit": limit, "label": label, "before": before}
     return r.request("GET", note_api, data)
 
 
-def create_notes(user, note, action_item: str = None, label: str = None):
+def create_notes(sub_id, user, note, action_item: str = None, label: str = None):
     """Create a mod note for a particular user
 
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
@@ -72,7 +71,7 @@ def create_notes(user, note, action_item: str = None, label: str = None):
     # NOTE `reddit_id` and `label` are not valid parameters for /api/mod/notes
     # "reddit_id": action_item, "label": label
     """
-    data = {"subreddit_id": subreddit, "user_id": user, "note": note, "reddit_id": action_item, "label": label}
+    data = {"subreddit_id": sub_id, "user_id": user, "note": note}
     return r.request("POST", note_api, data)
 
 
@@ -105,41 +104,37 @@ def process_notes(sub_id, full_notes, notes):
     mods = full_notes['constants']['users']
     
     for note_info in note_name_generator(notes):
-        note_gather = note_info[1]['ns'][0]
-        
-        try:
-            user_id = r.redditor(note_info[0]).id
-        except Exception:
-            print(f"u/{note_info[0]} is banned/deleted")
-            continue
-        
-        note = note_gather['n']
-        mod = mods[note_gather['m']]
-        # reddit_id not working
-        # labels not working, future use
-        
-        if len(note)+len(mod)+2 <= 250:
-            note = f"{note} -{mod}"
-        
-        create_notes(sub_id, user_id, note)
+        for note_gather in note_info[1]['ns']:
+            
+            try:
+                user_id = r.redditor(note_info[0]).fullname
+            except Exception:
+                print(f"u/{note_info[0]} is banned/deleted")
+                continue
+            
+            note = note_gather['n']
+            mod = mods[note_gather['m']]
+            # reddit_id not working
+            # labels not working, future use
+            
+            if len(note)+len(mod)+2 <= 250:
+                note = f"{note} -{mod}"
+            
+            create_notes(sub_id, user_id, note)
 
 
 def safe_checks():
     """Checks if the subreddit entered is valid and that you moderate it"""
-    
     assert subreddit, "Subreddit name was not entered"
     
     try:
         sub = r.subreddit(subreddit)
-    except prawcore.Redirect:
+        mod_list = sub.moderator()
+    except prawcore.exceptions.Redirect:
         raise SystemExit(f"NameError: r/{subreddit} is banned/private or doesn't exist")
     
-    mod_list = sub.moderator()
-    print(sub.display_name)
     if r.user.me().name not in mod_list:
         raise SystemExit(f"PermissionError: You are not a mod of r/{sub.display_name}")
-
-    
 
     main(sub)
     
