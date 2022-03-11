@@ -120,6 +120,7 @@ def process_notes(sub_id, full_notes, notes):
             if len(note)+len(mod)+2 <= 250:
                 note = f"{note} -{mod}"
             
+            
             create_notes(sub_id, user_id, note)
 
 
