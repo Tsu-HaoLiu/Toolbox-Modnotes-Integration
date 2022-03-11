@@ -14,10 +14,6 @@ subreddit = ''  # subreddit name here without r/
 note_api = "/api/mod/notes"
 
 
-def get_blob_wiki(notes: str) -> str:
-    return json.loads(notes)["blob"]
-
-
 def js_byte_to_string(data: bytes) -> str:
     return data.decode("utf-8")
 
@@ -75,7 +71,7 @@ def create_notes(sub_id, user, note, action_item: str = None, label: str = None)
     return r.request("POST", note_api, data)
 
 
-def blob_to_string(blob: str) -> dict:
+def decode_blob(blob: str) -> dict:
     """Decode toolbox's base64encode + zlib compression"""
     # base64 decode blob
     zcomp = b64d(blob)
@@ -90,7 +86,7 @@ def blob_to_string(blob: str) -> dict:
     return json.loads(cstring)
 
 
-def get_usernotes_wiki(sub):
+def get_usernotes_wiki(sub) -> dict:
     """Retrive usernotes from subreddit wiki and checks if the version compatibility"""
     try:
         wiki = sub.wiki["usernotes"].content_md
@@ -144,6 +140,7 @@ def safe_checks():
         print(str(e))
         if not any(keyword in str(e) for keyword in ["500 HTTP", "502 HTTP", "503 HTTP", "504 HTTP", "RequestException"]):
             raise SystemExit(f"NameError: r/{subreddit} is banned/private or doesn't exist")
+        raise SystemExit(f"ConnectionError: Having trouble connecting to Reddit. Try again later.")
     
     if r.user.me().name not in mod_list:
         raise SystemExit(f"PermissionError: You are not a mod of r/{sub.display_name}")
@@ -153,8 +150,8 @@ def safe_checks():
 
 def main(sub):
     usernotes = get_usernotes_wiki(sub)
-    cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
-    process_notes(sub.fullname, cleaned_notes)
+    cleaned_notes = decode_blob(usernotes["blob"])
+    process_notes(sub.fullname, usernotes, cleaned_notes)
 
 
 if __name__ == '__main__':
