@@ -72,7 +72,7 @@ def create_notes(user, note, action_item: str = None, label: str = None):
     # NOTE `reddit_id` and `label` are not valid parameters for /api/mod/notes
     # "reddit_id": action_item, "label": label
     """
-    data = {"subreddit_id": subreddit, "user_id": user, "note": note}
+    data = {"subreddit_id": subreddit, "user_id": user, "note": note, "reddit_id": action_item, "label": label}
     return r.request("POST", note_api, data)
 
 
@@ -132,12 +132,12 @@ def safe_checks():
     try:
         sub = r.subreddit(subreddit)
     except prawcore.Redirect:
-        raise NameError(f"r/{subreddit} is banned/private or doesn't exist")
+        raise SystemExit(f"NameError: r/{subreddit} is banned/private or doesn't exist")
     
     mod_list = sub.moderator()
     print(sub.display_name)
     if r.user.me().name not in mod_list:
-        raise PermissionError(f"You are not a mod of r/{sub.display_name}")
+        raise SystemExit(f"PermissionError: You are not a mod of r/{sub.display_name}")
 
     
 
@@ -152,6 +152,6 @@ def main(sub):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        raise TypeError(f"modnotes.py takes one argument ({len(sys.argv)-1} given)")
+        raise SystemExit(f"TypeError: modnotes.py takes one argument ({len(sys.argv)-1} given)")
     subreddit = sys.argv[1]
     safe_checks()
