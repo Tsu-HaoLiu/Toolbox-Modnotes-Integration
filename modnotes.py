@@ -75,10 +75,7 @@ def create_notes(user, note, action_item: str = None, label: str = None):
 
 
 def blob_to_string(blob: str) -> dict:
-    """
-    Decode toolbox's base64encode + zlib compression 
-    Base64 -> zlib-compressed -> string -> dict
-    """
+    """Decode toolbox's base64encode + zlib compression"""
     # base64 decode blob
     zcomp = b64d(blob)
     
@@ -100,22 +97,32 @@ def get_usernotes_wiki(sub):
 def note_name_generator(notes):
     for key, value in notes.items():
         yield key, value
-        
-        
-def process_notes(sub_id, notes):
+    
+    
+def process_notes(sub_id, full_notes,notes):
 
+    mods = full_notes['constants']['users']
+    
     for note_info in note_name_generator(notes):
         note_gather = note_info[1]['ns'][0]
-        try:
-            user_id = r.redditor(note_info[0]).id  # api call
-        except Exception:
-            print(f"User is banned/deactivated")
-            continue
-        note = note_gather['n']
-        action_item = note_gather['l']
-        create_notes(sub_id, user_id, note, action_item)
-
         
+        try:
+            user_id = r.redditor(note_info[0]).id
+        except Exception:
+            print(f"u/{note_info[0]} is banned/deleted")
+            continue
+        
+        note = note_gather['n']
+        mod = mods[note_gather['m']]
+        # reddit_id not working
+        # labels not working, future use
+        
+        if len(note)+len(mod)+2 <= 250:
+            note = f"{note} -{mod}"
+        
+        create_notes(sub_id, user_id, note)
+
+
 def safe_checks():
     """Checks if the subreddit entered is valid and that you moderate it"""
     
@@ -124,16 +131,18 @@ def safe_checks():
     try:
         sub = r.subreddit(subreddit)
     except prawcore.Redirect:
-        raise NameError(f"modnotes.py subreddit banned/private or doesn't exist")
+        raise NameError(f"r/{subreddit} is banned/private or doesn't exist")
     
     mod_list = sub.moderator()
     print(sub.display_name)
     if r.user.me().name not in mod_list:
-        raise ReferenceError(f"modnotes.py you are not a mod of r/{sub.display_name}")
+        raise PermissionError(f"You are not a mod of r/{sub.display_name}")
+
+    
 
     main(sub)
     
-        
+
 def main(sub):
     usernotes = get_usernotes_wiki(sub)
     cleaned_notes = blob_to_string(get_blob_wiki(usernotes))
