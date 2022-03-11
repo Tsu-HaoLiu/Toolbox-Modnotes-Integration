@@ -91,8 +91,17 @@ def blob_to_string(blob: str) -> dict:
 
 
 def get_usernotes_wiki(sub):
-    """Retrive usernotes from subreddit wiki"""
-    return sub.wiki["usernotes"].content_md
+    """Retrive usernotes from subreddit wiki and checks if the version compatibility"""
+    try:
+        wiki = sub.wiki["usernotes"].content_md
+        wiki = json.loads(wiki)
+    except prawcore.exceptions.NotFound:
+        raise SystemExit(f"NameError: r/{sub.display_name} is missing the `usernotes` wiki page!")
+    
+    if wiki['ver'] != 6:
+        raise SystemExit(f"VersionError: TB usernotes v{wiki['var']} is not supported. Supported v6") 
+    
+    return wiki
 
 
 def note_name_generator(notes):
@@ -119,7 +128,6 @@ def process_notes(sub_id, full_notes, notes):
             
             if len(note)+len(mod)+2 <= 250:
                 note = f"{note} -{mod}"
-            
             
             create_notes(sub_id, user_id, note)
 
