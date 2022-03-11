@@ -69,6 +69,8 @@ def create_notes(user, note, action_item: str = None, label: str = None):
     :param action_item: (optional) a fullname of a comment or post (should have either a t1 or t3 prefix)
     :param label: (optional) BOT_BAN, PERMA_BAN, BAN, ABUSE_WARNING, SPAM_WARNING, SPAM_WATCH, SOLID_CONTRIBUTOR, HELPFUL_USER
     :return: Unknown
+    # NOTE `reddit_id` and `label` are not valid parameters for /api/mod/notes
+    # "reddit_id": action_item, "label": label
     """
     data = {"subreddit_id": subreddit, "user_id": user, "note": note, "reddit_id": action_item, "label": label}
     return r.request("POST", note_api, data)
@@ -99,8 +101,7 @@ def note_name_generator(notes):
         yield key, value
     
     
-def process_notes(sub_id, full_notes,notes):
-
+def process_notes(sub_id, full_notes, notes):
     mods = full_notes['constants']['users']
     
     for note_info in note_name_generator(notes):
