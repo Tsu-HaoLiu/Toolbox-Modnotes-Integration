@@ -37,7 +37,7 @@ def pInflate(data) -> bytes:
 def note_name_generator(notes):
     for key, value in notes.items():
         yield key, value
-        
+
     
 def delete_notes(sub_id, user, note_id):
     """Function to delete notes from a user
