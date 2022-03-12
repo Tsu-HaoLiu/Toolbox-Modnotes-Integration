@@ -99,6 +99,8 @@ def get_usernotes_wiki(sub) -> dict:
         wiki = json.loads(wiki)
     except prawcore.exceptions.NotFound:
         raise SystemExit(f"NameError: r/{sub.display_name} is missing the `usernotes` wiki page!")
+    except json.decoder.JSONDecodeError:
+        raise SystemExit(f"CorruptWiki: Looks like your usernotes is corrupted, please make an issue on Github")
     
     if wiki['ver'] != 6:
         raise SystemExit(f"VersionError: TB usernotes v{wiki['var']} is not supported. Supported v6") 
@@ -134,6 +136,12 @@ def process_notes(sub_id, full_notes, notes):
             create_notes(sub_id, user_id, note)
 
 
+def main(sub):
+    usernotes = get_usernotes_wiki(sub)
+    cleaned_notes = decode_blob(usernotes["blob"])
+    process_notes(sub.fullname, usernotes, cleaned_notes)
+    
+
 def safe_checks(user_input):
     """Checks if the subreddit entered is valid and that you moderate it"""
     if not re.match('^[\/:A-Za-z0-9_]+$', user_input):
@@ -153,12 +161,6 @@ def safe_checks(user_input):
 
     main(sub)
     
-
-def main(sub):
-    usernotes = get_usernotes_wiki(sub)
-    cleaned_notes = decode_blob(usernotes["blob"])
-    process_notes(sub.fullname, usernotes, cleaned_notes)
-
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
