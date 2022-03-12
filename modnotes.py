@@ -10,7 +10,7 @@ praw_config = {
 
 try:
     r = praw.Reddit('indexbot', **praw_config)  # praw auth w/ praw.ini
-    print(f"Successfully logged in as u/{r.user.me()}")
+    print(f"Successfully logged in as u/{r.user.me().name}")
 except Exception:
     raise SystemExit(f"Reddit signin failed. Correct OAuth info. Is Reddit down?")
 
@@ -35,6 +35,7 @@ def pInflate(data) -> bytes:
     
 def delete_notes(sub_id, user, note_id):
     """Function to delete notes from a user
+    
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
     :param user: a fullname of an account (should have a t2_ prefix)
     :param note_id: a unique ID for the note to be deleted (should have a ModNote_ prefix)
@@ -141,7 +142,6 @@ def safe_checks():
         sub = r.subreddit(subreddit)
         mod_list = sub.moderator()
     except Exception as e:
-        print(str(e))
         if not any(keyword in str(e) for keyword in ["500 HTTP", "502 HTTP", "503 HTTP", "504 HTTP", "RequestException"]):
             raise SystemExit(f"NameError: r/{subreddit} is banned/private or doesn't exist")
         raise SystemExit(f"ConnectionError: Having trouble connecting to Reddit. Try again later.")
