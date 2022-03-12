@@ -134,9 +134,12 @@ def process_notes(sub_id, full_notes, notes):
             create_notes(sub_id, user_id, note)
 
 
-def safe_checks():
+def safe_checks(user_input):
     """Checks if the subreddit entered is valid and that you moderate it"""
-
+    if not re.match('^[\/:A-Za-z0-9_]+$', user_input):
+        raise SystemExit(f"NameError: [{user_input}] does not look like a valid subreddit")
+    subreddit = re.sub("/?r/", "", sys.argv[1])
+    
     try:
         sub = r.subreddit(subreddit)
         mod_list = sub.moderator()
@@ -160,8 +163,5 @@ def main(sub):
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         raise SystemExit(f"TypeError: {sys.argv[0]} takes one argument ({len(sys.argv)-1} given)")
-    user_input = sys.argv[1].strip()
-    if not re.match('^[\/:A-Za-z0-9_]+$', user_input):
-        raise SystemExit(f"NameError: [{user_input}] does not look like a valid subreddit")
-    subreddit = re.sub("/?r/", "", sys.argv[1])
-    safe_checks()
+
+    safe_checks(sys.argv[1].strip())
