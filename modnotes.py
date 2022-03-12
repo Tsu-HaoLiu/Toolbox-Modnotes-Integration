@@ -93,7 +93,7 @@ def decode_blob(blob: str) -> dict:
 
 
 def get_usernotes_wiki(sub) -> dict:
-    """Retrive usernotes from subreddit wiki and checks if the version compatibility"""
+    """Retrive usernotes from subreddit wiki and checks the version compatibility"""
     try:
         wiki = sub.wiki["usernotes"].content_md
         wiki = json.loads(wiki)
