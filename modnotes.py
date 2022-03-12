@@ -80,13 +80,13 @@ def create_notes(sub_id, user, note, action_item: str = None, label: str = None)
 def decode_blob(blob: str) -> dict:
     """Decode toolbox's base64encode + zlib compression"""
     # base64 decode blob
-    zcomp = b64d(blob)
+    decode_notes = b64d(blob)
     
     # zlib-uncompress to byte
-    uncomp_bytes = pInflate(zcomp)
+    inflated_bytes = pInflate(decode_notes)
     
     # byte to string
-    cstring = js_byte_to_string(uncomp_bytes)
+    cstring = js_byte_to_string(inflated_bytes)
     
     # Return dict
     return json.loads(cstring)
