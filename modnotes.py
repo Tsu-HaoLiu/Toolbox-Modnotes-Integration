@@ -3,6 +3,7 @@ import praw, prawcore
 import base64
 import zlib
 import json
+import re
 
 praw_config = {
     'user_agent': '/u/USERNAME Toolbox to Modnotes for r/SUBREDDIT'
@@ -161,5 +162,8 @@ def main(sub):
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         raise SystemExit(f"TypeError: {sys.argv[0]} takes one argument ({len(sys.argv)-1} given)")
-    subreddit = sys.argv[1] if not sys.argv[1].startswith("r/") else sys.argv[1].lstrip("r/")
+    user_input = sys.argv[1].strip()
+    if not re.match('^[\/:A-Za-z0-9_]+$', user_input):
+        raise SystemExit(f"NameError: {user_input} does not look like a valid subreddit")
+    subreddit = re.sub("/?r/", "", sys.argv[1])
     safe_checks()
