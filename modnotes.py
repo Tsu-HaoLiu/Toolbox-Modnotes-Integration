@@ -33,6 +33,11 @@ def pInflate(data) -> bytes:
     decompressed_data += decompress.flush()
     return decompressed_data
 
+
+def note_name_generator(notes):
+    for key, value in notes.items():
+        yield key, value
+        
     
 def delete_notes(sub_id, user, note_id):
     """Function to delete notes from a user
@@ -40,7 +45,7 @@ def delete_notes(sub_id, user, note_id):
     :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
     :param user: a fullname of an account (should have a t2_ prefix)
     :param note_id: a unique ID for the note to be deleted (should have a ModNote_ prefix)
-    :return: Unknown
+    :return: dict
     """
     data = {"subreddit_id": sub_id, "user_id": user, "note_id": note_id}
     return r.request("DELETE", note_api, data)
@@ -69,12 +74,19 @@ def create_notes(sub_id, user, note, action_item: str = None, label: str = None)
     :param note: Content of the note, should be a string with a maximum character limit of 250
     :param action_item: (optional) a fullname of a comment or post (should have either a t1 or t3 prefix)
     :param label: (optional) BOT_BAN, PERMA_BAN, BAN, ABUSE_WARNING, SPAM_WARNING, SPAM_WATCH, SOLID_CONTRIBUTOR, HELPFUL_USER
-    :return: Unknown
+    :return: None
     # NOTE `reddit_id` and `label` are not valid parameters for /api/mod/notes
     # "reddit_id": action_item, "label": label
     """
     data = {"subreddit_id": sub_id, "user_id": user, "note": note}
-    return r.request("POST", note_api, data)
+    try:
+        result = r.request("POST", note_api, data)
+    except Exception as e:
+        print(f"NoteCreationFailed: Note was not created for {user} - {e} skipping...")
+        return 
+    print(f"Created note for u/{result['created']['user']} - {result['created']['id']} ")
+    return 
+
 
 
 def decode_blob(blob: str) -> dict:
@@ -106,23 +118,19 @@ def get_usernotes_wiki(sub) -> dict:
         raise SystemExit(f"VersionError: TB usernotes v{wiki['var']} is not supported. Supported v6") 
     
     return wiki
-
-
-def note_name_generator(notes):
-    for key, value in notes.items():
-        yield key, value
     
     
-def process_notes(sub_id, full_notes, notes):
+def process_notes(sub_id: str, full_notes: dict, notes: dict):
+    """Convert Toolbox's usernotes to Reddit's modnotes"""
     mods = full_notes['constants']['users']
     
-    for note_info in note_name_generator(notes):
-        for note_gather in note_info[1]['ns']:
+    for user, note_info in note_name_generator(notes):
+        for note_gather in note_info['ns']:
             
             try:
-                user_id = r.redditor(note_info[0]).fullname
+                user_id = r.redditor(user).fullname
             except Exception:
-                print(f"u/{note_info[0]} is banned/deleted")
+                print(f"u/{user} is banned/deleted")
                 continue
             
             note = note_gather['n']
