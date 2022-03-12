@@ -13,7 +13,7 @@ try:
     r = praw.Reddit('indexbot', **praw_config)  # praw auth w/ praw.ini
     print(f"Successfully logged in as u/{r.user.me().name}")
 except Exception:
-    raise SystemExit(f"Reddit signin failed. Correct OAuth info. Is Reddit down?")
+    raise SystemExit(f"Reddit sign-in failed. Correct OAuth info. Is Reddit down?")
 
 subreddit = ''  # subreddit name here without r/
 note_api = "/api/mod/notes"
