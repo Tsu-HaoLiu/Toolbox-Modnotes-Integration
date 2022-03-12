@@ -81,12 +81,10 @@ def create_notes(sub_id, user, note, action_item: str = None, label: str = None)
     data = {"subreddit_id": sub_id, "user_id": user, "note": note}
     try:
         result = r.request("POST", note_api, data)
+        print(f"Created note for u/{result['created']['user']} - {result['created']['id']} ")
     except Exception as e:
         print(f"NoteCreationFailed: Note was not created for {user} - {e} skipping...")
         return 
-    print(f"Created note for u/{result['created']['user']} - {result['created']['id']} ")
-    return 
-
 
 
 def decode_blob(blob: str) -> dict:
