@@ -138,7 +138,7 @@ def safe_checks(user_input):
     """Checks if the subreddit entered is valid and that you moderate it"""
     if not re.match('^[\/:A-Za-z0-9_]+$', user_input):
         raise SystemExit(f"NameError: [{user_input}] does not look like a valid subreddit")
-    subreddit = re.sub("/?r/", "", sys.argv[1])
+    subreddit = re.sub("/?r/", "", user_input)
     
     try:
         sub = r.subreddit(subreddit)
