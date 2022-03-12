@@ -128,7 +128,7 @@ def process_notes(sub_id: str, full_notes: dict, notes: dict):
             try:
                 user_id = r.redditor(user).fullname
             except Exception:
-                print(f"u/{user} is banned/deleted")
+                print(f"u/{user} is banned/deleted skipping...")
                 continue
             
             note = note_gather['n']
