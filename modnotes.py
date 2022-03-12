@@ -5,10 +5,14 @@ import zlib
 import json
 
 praw_config = {
-    'user_agent': '/u/USERNAME Toolbox to Modnotes'
+    'user_agent': '/u/USERNAME Toolbox to Modnotes for r/SUBREDDIT'
 }
 
-r = praw.Reddit('indexbot', **praw_config)  # praw auth w/ praw.ini
+try:
+    r = praw.Reddit('indexbot', **praw_config)  # praw auth w/ praw.ini
+    print(f"Successfully logged in as u/{r.user.me()}")
+except Exception:
+    raise SystemExit(f"Reddit signin failed. Correct OAuth info. Is Reddit down?")
 
 subreddit = ''  # subreddit name here without r/
 note_api = "/api/mod/notes"
@@ -157,5 +161,5 @@ def main(sub):
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         raise SystemExit(f"TypeError: {sys.argv[0]} takes one argument ({len(sys.argv)-1} given)")
-    subreddit = sys.argv[1] if "r/" not in sys.argv[1] else sys.argv[1].strip("r/")
+    subreddit = sys.argv[1] if not sys.argv[1].startswith("r/") else sys.argv[1].lstrip("r/")
     safe_checks()
