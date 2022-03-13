@@ -36,6 +36,13 @@ client_secret=xaxkj7HNh8kwg8e5t4m6KvSrbTI
 password=hunter2
 username=fakebot3
 ```
+```
+praw_config = {
+    'user_agent': '/u/USERNAME Toolbox to Modnotes for r/SUBREDDIT'
+}
+r = praw.Reddit('indexbot', **praw_config)
+
+```
 
 ## Usage
 
