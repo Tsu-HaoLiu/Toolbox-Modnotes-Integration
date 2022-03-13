@@ -28,7 +28,7 @@ reddit = praw.Reddit(
     username="fakebot3",
 )
 ```
-praw.ini alternative 
+### praw.ini alternative 
 ```
 [indexbot]
 client_id=SI8pN3DSbt0zor
