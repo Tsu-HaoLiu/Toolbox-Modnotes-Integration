@@ -25,7 +25,7 @@ reddit = praw.Reddit(
     client_secret="xaxkj7HNh8kwg8e5t4m6KvSrbTI",
     password="hunter2",
     user_agent="u/USERNAME toolbox to modnotes",
-    username="fakebot3",
+    username="fakebot3"
 )
 ```
 ### [praw.ini alternative](https://praw.readthedocs.io/en/stable/getting_started/configuration/prawini.html#praw-ini)
