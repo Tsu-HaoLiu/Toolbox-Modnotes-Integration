@@ -5,6 +5,7 @@ import zlib
 import json
 import re
 
+"""This is just a placeholder CLI until full functionality of the Note UI"""
 
 try:
     r = praw.Reddit('indexbot')  # `indexbot` praw auth w/ praw.ini
