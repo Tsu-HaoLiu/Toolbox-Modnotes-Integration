@@ -7,7 +7,7 @@ import re
 
 
 try:
-    r = praw.Reddit()  # `DEFAULT` praw auth w/ praw.ini
+    r = praw.Reddit('indexbot')  # `indexbot` praw auth w/ praw.ini
     print(f"Successfully logged in as u/{r.user.me().name}")
 except Exception:
     raise SystemExit(f"Reddit sign-in failed. Correct OAuth info. Is Reddit down?")
