@@ -6,7 +6,7 @@ import json
 import re
 
 praw_config = {
-    'user_agent': '/u/USERNAME Toolbox to Modnotes for r/SUBREDDIT'
+    'user_agent': '/EDDIT'
 }
 
 try:
