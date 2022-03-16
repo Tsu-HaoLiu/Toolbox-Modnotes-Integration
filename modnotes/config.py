@@ -21,7 +21,7 @@ def save_praw(ci, cs, u, p, s):
         if config_var == config_parser_dict:
             return
 
-    config['DEFAULT'] = config_var
+    config['indexbot'] = config_var
     config.write(open(praw_file, 'w'))
     
     return
