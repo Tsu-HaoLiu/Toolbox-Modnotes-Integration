@@ -11,6 +11,7 @@ note_api = "/api/mod/notes"
 
 
 def auth(auth_details: list = None):
+    """Reddit authentication with global r variable"""
     global r
      
     try:
