@@ -5,12 +5,9 @@ import zlib
 import json
 import re
 
-praw_config = {
-    'user_agent': '/EDDIT'
-}
 
 try:
-    r = praw.Reddit('indexbot', **praw_config)  # praw auth w/ praw.ini
+    r = praw.Reddit()  # praw auth w/ praw.ini
     print(f"Successfully logged in as u/{r.user.me().name}")
 except Exception:
     raise SystemExit(f"Reddit sign-in failed. Correct OAuth info. Is Reddit down?")
