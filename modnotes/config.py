@@ -4,6 +4,7 @@ import configparser
 
 praw_file = "praw.ini"
 
+
 def save_praw(ci, cs, u, p, s):
     config = configparser.ConfigParser()
     config_var = {
