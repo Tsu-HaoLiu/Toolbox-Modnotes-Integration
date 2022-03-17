@@ -38,7 +38,7 @@ username=fakebot3
 user_agent=/u/USERNAME Toolbox to Modnotes for r/SUBREDDIT
 ```
 ```
-r = praw.Reddit('indexbot', **praw_config)
+r = praw.Reddit('indexbot')
 ```
 
 ## Usage
