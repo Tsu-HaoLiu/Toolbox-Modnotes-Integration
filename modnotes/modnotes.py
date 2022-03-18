@@ -4,44 +4,16 @@ import base64
 import zlib
 import json
 import re
+from auth import *
 
 
 subreddit = ''  # subreddit name here without r/
 note_api = "/api/mod/notes"
 
 
-def auth(auth_details: list = None):
-    """Reddit authentication with global r variable"""
+def OAuth(auth_details: list):
     global r
-     
-    try:
-        r = praw.Reddit('indexbot')  # praw auth w/ praw.ini
-        print(f"Successfully logged in as u/{r.user.me().name}")
-    except Exception:
-        if auth_details: 
-            remember = auth_details.pop(-1)
-            fa = auth_details.pop(-1)
-            client_id, client_secret, username, password, subreddit = auth_details
-            if fa is not None:
-                password = f"{password}:{fa}"
-            try:
-                r = praw.Reddit(
-                    client_id=client_id,
-                    client_secret=client_secret,
-                    username=username,
-                    password=password,
-                    user_agent=f"/u/{username} Toolbox to Modnotes for r/{subreddit}"
-                )
-                print(f"Successfully logged in as u/{r.user.me().name}")
-                if remember:
-                    save_praw(client_id, client_secret, username, password, subreddit)
-                else:
-                    burn_everything()
-                return
-            except Exception:
-                raise SystemExit(f"Reddit sign-in failed. Please fix info and try again!")
-        raise SystemExit(f"Reddit sign-in failed. Correct OAuth info. Is Reddit down?")
-
+    r = auth(auth_details)
 
 def js_byte_to_string(data: bytes) -> str:
     return data.decode("utf-8")
