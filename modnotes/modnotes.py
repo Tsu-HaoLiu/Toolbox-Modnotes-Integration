@@ -166,13 +166,7 @@ def process_notes(sub_id: str, full_notes: dict, notes: dict):
             
             create_notes(sub_id, user_id, note)
 
-
-def main(sub):
-    usernotes = get_usernotes_wiki(sub)
-    cleaned_notes = decode_blob(usernotes["blob"])
-    process_notes(sub.fullname, usernotes, cleaned_notes)
-    
-
+            
 def safe_checks(user_input):
     """Checks if the subreddit entered is valid and that you moderate it"""
     if not re.match('^[\/:A-Za-z0-9_]+$', user_input):
@@ -190,11 +184,19 @@ def safe_checks(user_input):
     if r.user.me().name not in mod_list:
         raise SystemExit(f"PermissionError: You are not a mod of r/{sub.display_name}")
 
-    main(sub)
+
+def main(OAuth_data):
+    ci, cs, u, p, s, fa, save = OAuth_data
+
+    auth(OAuth_data)
+    sub = safe_checks(s)
+    
+    usernotes = get_usernotes_wiki(sub)
+    cleaned_notes = decode_blob(usernotes["blob"])
+    process_notes(sub.fullname, usernotes, cleaned_notes)
     
 
-if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        raise SystemExit(f"TypeError: {sys.argv[0]} takes one argument ({len(sys.argv)-1} given)")
 
-    safe_checks(sys.argv[1].strip())
+
+if __name__ == '__main__':
+    arg_parser()
