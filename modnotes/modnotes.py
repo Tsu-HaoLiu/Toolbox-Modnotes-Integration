@@ -196,7 +196,78 @@ def main(OAuth_data):
     process_notes(sub.fullname, usernotes, cleaned_notes)
     
 
+def arg_parser():
+    import argparse # only needed if called from CLI
+    app_dev = "\nPlease check out the README.md for more info"
 
+    parse = argparse.ArgumentParser()
+    parse.add_argument(
+        '-ci',
+        '--client_id',
+        type=str,
+        help=f'Your client_id is found in your /prefs/app page.{app_dev}'
+    )
+    parse.add_argument(
+        '-cs',
+        '--client_secret',
+        type=str,
+        help=f'Your client_secret is found in your /prefs/app page.{app_dev}'
+    )
+    parse.add_argument(
+        '-u',
+        '--username',
+        type=str,
+        help='The Reddit username of the mod account in which you would like to convert toolbox notes to modnotes.'
+    )
+    parse.add_argument(
+        '-p',
+        '--password',
+        type=str,
+        help='The password of your Reddit account.'
+    )
+    parse.add_argument(
+        '-s',
+        '--subreddit',
+        type=str,
+        required=True,
+        help='The subreddit you want to convert toolbox notes to modnotes.'
+    )
+    parse.add_argument(
+        '-fa',
+        type=int,
+        default=None,
+        help='If your account has 2fa enabled you will have to enter the 2FA code.'
+    )
+    parse.add_argument(
+        '-save',
+        '--save_info',
+        type=bool,
+        default=False,
+        help='If you would like to save your info to a praw.ini file. (Default: %(default)s)'
+    )
+
+    args = parse.parse_args()
+    OAuth_details = [*vars(args).values()]
+    
+    filled_info = [l for x, l in enumerate(OAuth_details) if x < 5]
+    filled_info = all(x is not None for x in filled_info)
+
+    prawfile_detected = os.path.exists(praw_file)
+    if args.subreddit and prawfile_detected:
+        """use praw.ini and use sub provided"""
+        main(OAuth_details)
+
+    if not prawfile_detected and not filled_info:
+        """No praw and no info entered pass help info"""
+        print(f'Missing arguments, exiting.')
+        parse.print_help()
+        sys.exit(1)
+
+    if filled_info:
+        # checks ci,cs,u,p,s
+        main(OAuth_details)
+        
+        
 
 if __name__ == '__main__':
     arg_parser()
