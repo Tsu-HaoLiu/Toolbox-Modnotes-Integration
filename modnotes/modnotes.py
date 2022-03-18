@@ -267,7 +267,6 @@ def arg_parser():
         # checks ci,cs,u,p,s
         main(OAuth_details)
         
-        
 
 if __name__ == '__main__':
     arg_parser()
