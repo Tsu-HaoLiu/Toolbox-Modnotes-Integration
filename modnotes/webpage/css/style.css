@@ -266,7 +266,7 @@ button#confirm-button {
     background: #444;
     border: none;
     width: 100%;
-    max-width: 100;
+    max-width: 105;
     height: 1.8rem;
     color: lightgrey;
     cursor: pointer;
