@@ -14,7 +14,7 @@ function coinsleft(c) {
 
 
 const fv = function formValidation() {
-    console.log("Click Confirm");
+    console.log("Clicked Confirm");
     const formID = document.forms["form-detail"].getElementsByTagName('input');
 
     const filledForm = [];
