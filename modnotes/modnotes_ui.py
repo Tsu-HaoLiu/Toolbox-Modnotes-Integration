@@ -53,7 +53,6 @@ def processnotes():
 
 @error_catcher
 def setupConvertion(form_details):
-    
     # Authenticate PRAW
     mc.OAuth(form_details)
     
