@@ -2,7 +2,9 @@ import base64
 import zlib
 import json
 
+
 """Decode toolbox Base64 & zlib-compression"""
+
 
 def pInflate(data) -> bytes:
     decompress = zlib.decompressobj(15)
@@ -40,7 +42,7 @@ class Blob_decoder:
         
         # sum of values to get total
         note_count = [len(x['ns']) for x in self.cleaned_notes.values()]
-        self.notelength = sum(note_count)
+        self.notelength = sum(note_count) - 1
         
         return self.cleaned_notes
     
