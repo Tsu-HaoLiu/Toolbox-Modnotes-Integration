@@ -74,16 +74,13 @@ def setupConvertion(form_details):
 def downloadCSV():
     mc.conv.csv_format()
     
-    
 @eel.expose
 def downloadJSON():
     mc.conv.json_format()
     
-    
 @eel.expose
 def startNotes():
     processnotes()
-
 
 @eel.expose
 def browser__init():
