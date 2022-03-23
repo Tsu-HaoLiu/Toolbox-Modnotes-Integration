@@ -30,7 +30,7 @@ reddit = praw.Reddit(
 ```
 ### [praw.ini alternative](https://praw.readthedocs.io/en/stable/getting_started/configuration/prawini.html#praw-ini)
 ```
-[indexbot]
+[DEFAULT]
 client_id=SI8pN3DSbt0zor
 client_secret=xaxkj7HNh8kwg8e5t4m6KvSrbTI
 username=fakebot3
@@ -39,7 +39,7 @@ subreddit=birdswitharms
 user_agent=/u/USERNAME Toolbox to Modnotes for r/SUBREDDIT
 ```
 ```
-r = praw.Reddit('indexbot')
+r = praw.Reddit('DEFAULT')
 ```
 
 ## Usage
