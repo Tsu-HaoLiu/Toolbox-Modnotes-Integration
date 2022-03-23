@@ -88,9 +88,7 @@ def startNotes():
 @eel.expose
 def browser__init():
     """Retrive login from .ini"""
-    ad = mc.retrive_ini()
-    print(ad)
-    return eel.eelFillForm(ad)
+    return eel.eelFillForm(mc.retrive_ini())
 
 
 @eel.expose
