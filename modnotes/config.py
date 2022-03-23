@@ -1,45 +1,59 @@
 import os
+import re
 import configparser
 
 
 praw_file = "praw.ini"
-config = configparser.ConfigParser()
+ini_keys = ["client_id", "client_secret", "username", "password", "subreddit"]
+config = configparser.ConfigParser(interpolation=None)
+
 
 def save_praw(ci, cs, u, p, s):
+    """Saved login information in a standard praw.ini file"""
     config_var = {
             "client_id": ci,
             "client_secret": cs,
-            "password":p,
             "username":u,
+            "password":p,
             "subreddit": s,
             "user_agent":f"/u/{u} Toolbox to Modnotes for r/{s}"
         }
     
+    # Check if praw.ini already exists and 
+    # if true replace old value with new values
     if os.path.exists(praw_file):
         config.read(praw_file)
-        config_parser_dict = {s:dict(config.items(s)) for s in config.sections()}
+        config_parser_dict = {x:config.get('DEFAULT', x) for x in ini_keys}
         if config_var == config_parser_dict:
             return
 
-    config['indexbot'] = config_var
+    # Add new data to ini file
+    config['DEFAULT'] = config_var
     config.write(open(praw_file, 'w'))
-    
     return
 
 
 def retrive_ini():
+    """Retrives and gathers necessary info from ini and returns a list"""
     if os.path.exists(praw_file):
+        details = []
         config.read(praw_file)
-        ini_dict = {s:dict(config.items(s)) for s in config.sections()}
-        if ":" in ini_dict.get('password', ""):
-            ini_dict['password'] = ini_dict['password'].split(":")[0]
-        ini_dict.pop('user_agent', None)
-        ini_list = [*ini_dict.values()]
-        return ini_list
-    return [""] * 5
+        
+        for x in ini_keys:
+            data = config.get('DEFAULT', x)
+            
+            # If password has colon (:) followed and ending by 6 number digits 
+            # remove 2fa code. Accounts with 2fa submit passwords like "password:123456"
+            if re.search(data, '\:\d{6}$') and x == "password":
+                data = data.split(":")[0]
+            details.append(data)
+            
+        return details
+    return None
 
 
 def burn_everything():
+    """Delete praw.ini"""
     if not os.path.exists(praw_file):
         return "File not found"    
     os.remove(praw_file)
