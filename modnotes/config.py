@@ -40,7 +40,10 @@ def retrive_ini():
         config.read(praw_file)
         
         for x in ini_keys:
-            data = config.get('DEFAULT', x)
+            try:
+                data = config.get('DEFAULT', x)
+            except configparser.NoOptionError:
+                pass # ignore missing items as this will only go to UI 
             
             # If password has colon (:) followed and ending by 6 number digits 
             # remove 2fa code. Accounts with 2fa submit passwords like "password:123456"
