@@ -3,11 +3,10 @@ import io
 import eel
 import traceback
 import logging
-import ModnotesConverter as mc
+import modnotes as mc
 
 
 eel.init(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'webpage'))
-
 
 class ForwardToFunctionStream(io.TextIOBase):
     def __init__(self, output_function=print):
@@ -53,6 +52,7 @@ def processnotes():
 
 @error_catcher
 def setupConvertion(form_details):
+    
     # Authenticate PRAW
     mc.OAuth(form_details)
     
@@ -74,18 +74,23 @@ def setupConvertion(form_details):
 def downloadCSV():
     mc.conv.csv_format()
     
+    
 @eel.expose
 def downloadJSON():
     mc.conv.json_format()
+    
     
 @eel.expose
 def startNotes():
     processnotes()
 
+
 @eel.expose
 def browser__init():
     """Retrive login from .ini"""
-    return mc.retrive_ini()
+    ad = mc.retrive_ini()
+    print(ad)
+    return eel.eelFillForm(ad)
 
 
 @eel.expose
