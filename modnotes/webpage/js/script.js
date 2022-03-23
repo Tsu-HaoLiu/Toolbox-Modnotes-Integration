@@ -13,6 +13,7 @@ function coinsleft(c) {
 }
 
 
+// Function to validate the forms before sending to python backend
 const fv = function formValidation() {
     console.log("Clicked Confirm");
     const formID = document.forms["form-detail"].getElementsByTagName('input');
@@ -20,34 +21,49 @@ const fv = function formValidation() {
     const filledForm = [];
     Array.from(formID).every(input => {
         
-        if (input.value && // if exist AND
-            input.value.length > 0 && // if value have one charecter at least
-            input.value.trim().length > 0 &&
-            input.id != "save-info") //remeber me button (optional)
-        {
-            filledForm.push(input.value);
-        } else if (input.id == "mfa" && !input.value) {
+        if (input.value &&                   // If exist AND
+            input.value.trim().length > 0 && // If value have one charecter at least AND 
+            input.id != "save-info") {       // Not a checkbox
+            
+            filledForm.push(input.value);    // Add string to filledForm array
+
+        } else if (input.id == "mfa" && !input.value) { // If 2fa input and if empty push null
             filledForm.push(null);
-        } else if (input.id == "save-info") {
+
+        } else if (input.id == "save-info") { // If input checkbox push boolean
             filledForm.push(formID["save-info"].checked);
-        } else {
-            console.log("Missing info: " + input.id);
+
+        } else {  // Stop loop (Return false) and invalid console log.
             printjs("Missing info: " + input.id );
             return false;
         }
+        // .every requires a truthy value for every array element to continue
         return true;
     });
+
+    // Once validated send data to python backend
     sendValidatedData(filledForm, formID);
 }
 
 
 // Auto fills form from ini
 function fillForm(l) {
+
+    // Check if array (or python list) is actually sent
+    if (!Array.isArray(l) || !l.length) return;
+
+    // Loop through all forms with input tag, and sort them accordingly
     for (let [i, k] of Array.from(document.forms["form-detail"].getElementsByTagName('input')).entries()) {
-        k.value = l[i]
-        if (k.id == "save-info") {
-            k.checked = true;
+        
+        if (k.id == "mfa") continue; // Ignore mfa input box as 2fa will have expired long before.
+        
+        if (k.id == "save-info") {   // Auto check "remember me", incase of user error and incidentally delete ini file
+            k.checked = true; 
+            continue;
         }
+
+        // Add values from ini to input box
+        k.value = l[i];
     }
 }
 
@@ -58,6 +74,14 @@ function btnSwitcher() {
     subbtn.removeEventListener("click", fv, true);
     subbtn.innerText = "Convert Notes";
     subbtn.addEventListener("click", () => pStartNoteProcess());
+
+    const pcsv = document.getElementById('ex-csv');
+    pcsv.addEventListener("click", () => pRetrieveCSV());
+    pcsv.style.removeProperty('background-image');
+
+    const pjson = document.getElementById('ex-json');
+    pjson.addEventListener("click", () => pRetrieveJSON());
+    pjson.style.removeProperty('background-image');
 }
 
 
@@ -65,12 +89,12 @@ function btnSwitcher() {
 function eyeClickEvent(eyeOject) {
     const prevChild = eyeOject.previousElementSibling;
 
-    // toggle the type attribute
+    // Toggle the type attribute
     const type = prevChild.getAttribute("type") === "password" ? "text" : "password";
     prevChild.setAttribute("type", type);
     prevChild.focus();
 
-    // toggle the icon
+    // Toggle the icon
     if (type == "text") {
         eyeOject.classList += "-slash";
     } else {
@@ -82,8 +106,6 @@ function eyeClickEvent(eyeOject) {
 function scriptmain() {
     document.querySelector("#confirm-button").addEventListener("click", fv, true);
     document.querySelectorAll(".hidden-eye").forEach(item => item.addEventListener("click", () => eyeClickEvent(item)));
-    document.getElementById('ex-csv').addEventListener("click", () => pRetrieveCSV());
-    document.getElementById('ex-json').addEventListener("click", () => pRetrieveJSON());
 }
 
 // DOM load
