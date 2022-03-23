@@ -8,7 +8,7 @@
 __author__ = "Tsu-Hao Liu"
 
 # Imports
-import os, sys
+import os
 import io
 import eel
 import traceback
