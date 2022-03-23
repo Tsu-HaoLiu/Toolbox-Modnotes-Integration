@@ -55,5 +55,6 @@ function eelmain() {
     eel.browser__init();
 }
 
+
 // DOM load
 window.addEventListener('DOMContentLoaded', () => eelmain(), false);
