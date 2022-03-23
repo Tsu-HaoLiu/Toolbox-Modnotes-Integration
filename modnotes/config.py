@@ -2,6 +2,7 @@ import os
 import re
 import configparser
 
+"""Save, retrive and delete praw.ini data"""
 
 praw_file = "praw.ini"
 ini_keys = ["client_id", "client_secret", "username", "password", "subreddit"]
