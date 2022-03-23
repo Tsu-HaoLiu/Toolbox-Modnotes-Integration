@@ -2,6 +2,10 @@ import praw
 import logging
 from config import *
 
+
+"""Authenticate user manually or w/ PRAW"""
+
+
 logger = logging.getLogger('modnotes')
 
 
