@@ -1,5 +1,4 @@
 import praw
-import os
 import logging
 from config import *
 

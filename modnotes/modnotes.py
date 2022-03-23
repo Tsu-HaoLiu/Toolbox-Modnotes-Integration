@@ -1,4 +1,13 @@
-import os, sys
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#----------------------------------------------------------------------------
+# Created Date: Wednesday March 23 9:26:00 UTC 2022
+"""modnotes_ui.py: Create a chromium based ui with eel to easily convert toolbox usernotes to modnotes"""
+#----------------------------------------------------------------------------
+
+__author__ = "Tsu-Hao Liu"
+
+import sys
 import re
 import prawcore
 import logging
