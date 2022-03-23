@@ -44,10 +44,9 @@ def retrive_ini():
             
             # If password has colon (:) followed and ending by 6 number digits 
             # remove 2fa code. Accounts with 2fa submit passwords like "password:123456"
-            if re.search(data, '\:\d{6}$') and x == "password":
+            if re.search('\:\d{6}$', data) and x == "password":
                 data = data.split(":")[0]
             details.append(data)
-            
         return details
     return None
 
