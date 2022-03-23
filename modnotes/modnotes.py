@@ -83,7 +83,6 @@ def create_notes(user, note, action_item: str = None, label: str = None):
         return 
 
 
-
 def get_usernotes_wiki(sub) -> dict:
     """Retrive usernotes from subreddit wiki and checks the version compatibility"""
     try:
@@ -153,7 +152,6 @@ def subreddit_validation(user_input):
         return subreddit
     
     
-    
 def main(form_details):
     
     # Authenticate PRAW
@@ -172,7 +170,6 @@ def main(form_details):
     conv.add(usernotes, cleaned_notes)
     
     process_notes(conv.combinednotes(), bDecode.conv_blob())
-    
     
     
 def arg_parser():
