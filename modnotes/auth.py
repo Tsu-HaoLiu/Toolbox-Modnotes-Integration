@@ -3,7 +3,7 @@ import logging
 from config import *
 
 
-"""Authenticate user manually or w/ PRAW"""
+"""Authenticate user w/ PRAW"""
 
 
 logger = logging.getLogger('modnotes')
