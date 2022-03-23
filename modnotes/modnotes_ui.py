@@ -8,7 +8,7 @@
 __author__ = "Tsu-Hao Liu"
 
 # Imports
-import os
+import os, sys
 import io
 import eel
 import traceback
@@ -17,6 +17,7 @@ import modnotes as mc
 
 
 eel.init(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'webpage'))
+
 
 class ForwardToFunctionStream(io.TextIOBase):
     def __init__(self, output_function=print):
