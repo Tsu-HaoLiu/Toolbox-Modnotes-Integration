@@ -38,8 +38,8 @@ def ratelimit():
 def delete_notes(user, note_id):
     """Function to delete notes from a user
     
-    :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
-    :param user: a fullname of an account (should have a t2_ prefix)
+    :param subreddit: subreddit name
+    :param user: account username
     :param note_id: a unique ID for the note to be deleted (should have a ModNote_ prefix)
     :return: dict
     """
@@ -53,20 +53,20 @@ def get_notes(user, limit: int = 25, label: str = None, before: str = None) -> d
     :param subreddit: subreddit name
     :param user: account username
     :param limit: (optional) the number of mod notes to return in the response payload (default: 25, max: 100)
-    :param label: (optional) NOTE, APPROVAL, REMOVAL, BAN, MUTE, INVITE, SPAM, CONTENT_CHANGE, MOD_ACTION, ALL,
+    :param filter: (optional) NOTE, APPROVAL, REMOVAL, BAN, MUTE, INVITE, SPAM, CONTENT_CHANGE, MOD_ACTION, ALL,
     to be used for querying specific types of mod notes (default: all)
     :param before: (optional) an encoded string used for pagination with mod notes
     :return: Function will return a dict with all mod notes info regarding specific user
     """
-    data = {"subreddit": subreddit, "user": user, "limit": limit, "label": label, "before": before}
+    data = {"subreddit": subreddit, "user": user, "limit": limit, "filter": label, "before": before}
     return r.request("GET", note_api, data)
 
 
 def create_notes(user, note, action_item: str = None, label: str = None):
     """Create a mod note for a particular user
 
-    :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
-    :param user: a fullname of an account (should have a t2_ prefix)
+    :param subreddit: subreddit name
+    :param user: account username
     :param note: Content of the note, should be a string with a maximum character limit of 250
     :param action_item: (optional) a fullname of a comment or post (should have either a t1 or t3 prefix)
     :param label: (optional) BOT_BAN, PERMA_BAN, BAN, ABUSE_WARNING, SPAM_WARNING, SPAM_WATCH, SOLID_CONTRIBUTOR, HELPFUL_USER
