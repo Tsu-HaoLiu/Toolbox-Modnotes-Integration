@@ -22,7 +22,7 @@ logger = logging.getLogger('modnotes')
 
 
 conv = Converter()
-bDecode = Blob_decoder()
+bDecode = BlobDecoder()
 
 
 def OAuth(auth_details: list):

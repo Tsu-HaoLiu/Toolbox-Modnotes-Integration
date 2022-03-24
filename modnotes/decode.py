@@ -21,7 +21,7 @@ def js_byte_to_string(data: bytes) -> str:
     return data.decode("utf-8")
     
 
-class Blob_decoder:
+class BlobDecoder:
     def __init__(self):
         self.cleaned_notes = dict()
         self.notelength = int
