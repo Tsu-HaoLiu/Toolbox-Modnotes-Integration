@@ -46,7 +46,7 @@ def retrive_ini():
             try:
                 data = config.get('DEFAULT', x)
             except configparser.NoOptionError:
-                pass # ignore missing items as this will only go to UI 
+                data = ""
             
             # If password has colon (:) followed and ending by 6 number digits 
             # remove 2fa code. Accounts with 2fa submit passwords like "password:123456"

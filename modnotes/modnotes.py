@@ -224,8 +224,9 @@ def arg_parser():
     )
     
     args = parse.parse_args()
-    OAuth_details = [*vars(args).values()]
     
+    main([*vars(args).values()])
+
 
 
 if __name__ == '__main__':
