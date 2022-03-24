@@ -224,9 +224,7 @@ def arg_parser():
     )
     
     args = parse.parse_args()
-    
     main([*vars(args).values()])
-
 
 
 if __name__ == '__main__':
