@@ -50,8 +50,8 @@ def delete_notes(user, note_id):
 def get_notes(user, limit: int = 25, label: str = None, before: str = None) -> dict:
     """ Function to retrieve specific user notes from a given subreddit
 
-    :param subreddit: a fullname of a subreddit (should have a t5_ prefix)
-    :param user: a fullname of an account (should have a t2_ prefix)
+    :param subreddit: subreddit name
+    :param user: account username
     :param limit: (optional) the number of mod notes to return in the response payload (default: 25, max: 100)
     :param label: (optional) NOTE, APPROVAL, REMOVAL, BAN, MUTE, INVITE, SPAM, CONTENT_CHANGE, MOD_ACTION, ALL,
     to be used for querying specific types of mod notes (default: all)
