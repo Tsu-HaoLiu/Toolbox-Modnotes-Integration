@@ -4,21 +4,17 @@ import base64
 import zlib
 import json
 
-
 def pInflate(data) -> bytes:
     decompress = zlib.decompressobj(15)
     decompressed_data = decompress.decompress(data)
     decompressed_data += decompress.flush()
     return decompressed_data
 
-
 def b64d(data: str) -> bytes:
     return base64.b64decode(data)
 
-
 def js_byte_to_string(data: bytes) -> str:
     return data.decode("utf-8")
-    
 
 class BlobDecoder:
     def __init__(self):
