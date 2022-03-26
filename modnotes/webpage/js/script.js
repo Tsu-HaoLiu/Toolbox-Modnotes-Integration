@@ -30,7 +30,7 @@ const fv = function formValidation() {
         } else if (input.id == "mfa" && !input.value) { // If 2fa input and if empty push null
             filledForm.push(null);
 
-        } else if (input.id == "save-info") { // If input checkbox push boolean
+        } else if (input.id == "save-info") { // return checkbox boolean
             filledForm.push(formID["save-info"].checked);
 
         } else {  // Stop loop (Return false) and invalid console log.
