@@ -68,7 +68,7 @@ def setupConvertion(form_details):
     mc.OAuth(form_details)
     
     # Validate subreddit
-    mc.safe_checks(form_details[4])  
+    mc.subreddit_validation(form_details[4])  
     
     # Retrive usernote from wiki
     usernotes = mc.get_usernotes_wiki()
