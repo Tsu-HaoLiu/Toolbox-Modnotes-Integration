@@ -1,8 +1,8 @@
+"""Decode toolbox Base64 & zlib-compression"""
+
 import base64
 import zlib
 import json
-
-"""Decode toolbox Base64 & zlib-compression"""
 
 
 def pInflate(data) -> bytes:
