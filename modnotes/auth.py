@@ -1,8 +1,8 @@
+"""Authenticate user with PRAW"""
+
 import praw
 import logging
 from config import *
-
-"""Authenticate user with PRAW"""
 
 logger = logging.getLogger('modnotes')
 
