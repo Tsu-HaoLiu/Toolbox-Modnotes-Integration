@@ -76,7 +76,6 @@ def create_notes(user, note, action_item: str = None, label: str = None):
     data = {"subreddit": subreddit, "user": user, "note": note}
     try:
         result = r.request("POST", note_api, data)
-        print(result)
         logger.info(f"Created note for u/{result['created']['user']}")
     except Exception as e:
         logger.info(f"NoteCreationFailed: u/{user} - {e} skipping...")
