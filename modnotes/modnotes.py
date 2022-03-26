@@ -7,7 +7,6 @@
 
 __author__ = "Tsu-Hao Liu"
 
-import os, sys
 import re
 import prawcore
 import logging
