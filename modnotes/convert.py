@@ -1,7 +1,7 @@
+"""Convert toolbox notes to csv or json and download as a file"""
+
 import pandas as pd
 import logging
-
-"""Convert toolbox notes to csv or json and download as a file"""
 
 logger = logging.getLogger('modnotes')
 
