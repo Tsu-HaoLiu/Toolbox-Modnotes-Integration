@@ -35,7 +35,7 @@ def save_praw(ci, cs, u, p, s):
 
 
 def retrive_ini():
-    """Retrives and gathers necessary info from ini and returns a list"""
+    """Retrives and gathers necessary info from ini and return a list"""
     if os.path.exists(praw_file):
         details = []
         config.read(praw_file)
