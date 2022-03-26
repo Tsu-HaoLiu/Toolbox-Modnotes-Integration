@@ -40,7 +40,7 @@ def delete_notes(user, note_id):
     :param subreddit: subreddit name
     :param user: account username
     :param note_id: a unique ID for the note to be deleted (should have a ModNote_ prefix)
-    :return: dict
+    :return:
     """
     data = {"subreddit": subreddit, "user": user, "note_id": note_id}
     return r.request("DELETE", note_api, data)
@@ -82,7 +82,7 @@ def create_notes(user, note, action_item: str = None, label: str = None):
         return 
 
 
-def get_usernotes_wiki(sub) -> dict:
+def get_usernotes_wiki() -> dict:
     """Retrive usernotes from subreddit wiki and checks the version compatibility"""
     try:
         wiki = subreddit.wiki["usernotes"].content_md
@@ -104,7 +104,7 @@ def note_name_generator(notes):
         yield key, value
 
 
-def process_notes(sub_id: str, full_notes: dict, notes: dict):
+def process_notes(full_notes: dict, notes: dict):
     """Convert Toolbox's usernotes to Reddit's modnotes"""
     mods = full_notes['constants']['users']
     
