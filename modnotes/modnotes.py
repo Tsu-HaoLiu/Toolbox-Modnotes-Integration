@@ -76,9 +76,10 @@ def create_notes(user, note, action_item: str = None, label: str = None):
     data = {"subreddit": subreddit, "user": user, "note": note}
     try:
         result = r.request("POST", note_api, data)
-        logger.info(f"Created note for u/{result['created']['user']}")
+        logger.warning(f"Created note for u/{result['created']['user']}")
     except Exception as e:
-        logger.info(f"NoteCreationFailed: u/{user} - {e} skipping...")
+        logger.info(traceback.format_exc())
+        logger.warning(f"NoteCreationFailed: u/{user} - {e} skipping...")
         return 
 
 
@@ -92,6 +93,7 @@ def get_usernotes_wiki() -> dict:
     except prawcore.exceptions.Forbidden:
         raise Exception(f"Unauthorized: You don't have `wiki` access on r/{subreddit.display_name}!")
     except Exception as e:
+        logger.info(traceback.format_exc())
         raise Exception("Did not reach Reddit https://redditstatus.com/")
     else:
         if wiki['ver'] != 6:
@@ -110,12 +112,12 @@ def process_notes(full_notes: dict, notes: dict):
     
     for note_info in note_name_generator(notes):
         for note_gather in note_info[1]['ns']:
-            logger.info(f"Adding note for: {note_info[0]}")
+            logger.warning(f"Adding note for: {note_info[0]}")
             try:
                 r.redditor(note_info[0]).id  # api call
                 user_id = r.redditor(note_info[0]).name
             except Exception:
-                logger.info(f"u/{note_info[0]} is banned/deleted skipping")
+                logger.warning(f"u/{note_info[0]} is banned/deleted skipping")
                 continue
             note = note_gather['n']  # note
             mod = mods[note_gather['m']]  # mod
@@ -142,12 +144,13 @@ def subreddit_validation(user_input):
     except Exception as e:
         if not any(keyword in str(e) for keyword in ["500 HTTP", "502 HTTP", "503 HTTP", "504 HTTP", "RequestException"]):
             raise Exception(f"NameError: r/{subreddit} is banned/private or doesn't exist")
+        logger.info(traceback.format_exc())
         raise Exception("ConnectionError: Having trouble connecting to Reddit. Try again later.")
     else:
         current_user = r.user.me().name.lower()
         if current_user not in mod_list:
             raise Exception(f"ImposterError: You are not a mod of r/{subreddit}")
-        logger.info(f"Checking out r/{subreddit}...")
+        logger.warning(f"Checking out r/{subreddit}...")
         return subreddit
     
     

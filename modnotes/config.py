@@ -20,13 +20,16 @@ def save_praw(ci, cs, u, p, s):
             "user_agent":f"/u/{u} Toolbox to Modnotes for r/{s}"
         }
     
-    # Check if praw.ini already exists and 
-    # if true replace old value with new values
+    # Check if praw.ini already exists, if true 
+    # and info is different replace old value with new values
     if os.path.exists(praw_file):
         config.read(praw_file)
-        config_parser_dict = {x:config.get('DEFAULT', x) for x in ini_keys}
-        if config_var == config_parser_dict:
-            return
+        try:
+            config_parser_dict = {x:config.get('DEFAULT', x) for x in ini_keys}
+            if config_var == config_parser_dict:
+                return
+        except configparser.NoOptionError:
+            pass  # Didn't find 'DEFAULT' so continue replacing whole file.
 
     # Add new data to ini file
     config['DEFAULT'] = config_var

@@ -13,6 +13,7 @@ import io
 import eel
 import traceback
 import logging
+from logging.handlers import RotatingFileHandler
 import modnotes as mc
 
 
@@ -36,11 +37,20 @@ def logger_console():
     """init logger to display on ui"""
     module_logger = logging.getLogger('modnotes')
     module_logger.setLevel(logging.DEBUG)
+    
+    # Log into ui textarea
     handler = logging.StreamHandler(ForwardToFunctionStream(uiconsole))
     handler.setFormatter(logging.Formatter('%(message)s'))
-    handler.setLevel(logging.DEBUG)
+    handler.setLevel(logging.WARNING)
+    
+    # Catch errors in log files for future debugging
+    file_handler = RotatingFileHandler('_logs.log', maxBytes=15*1024*1024, backupCount=10)
+    file_handler.setFormatter(logging.Formatter('[%(asctime)s] %(message)s', datefmt='%Y-%m-%d %I:%M:%S%p'))
+    file_handler.setLevel(logging.INFO)
+
+    module_logger.addHandler(file_handler)
     module_logger.addHandler(handler)
-    module_logger.info("Welcome! Fill out your info above and click the \"login\" button to get started!")
+    module_logger.warning("Welcome! Fill out your info above and click the \"login\" button to get started!")
 
 
 def error_catcher(func):
@@ -55,7 +65,7 @@ def error_catcher(func):
 @error_catcher
 def processnotes():
     """Function to process notes and convert them to modnotes"""
-    for x, _ in enumerate(mc.process_notes(mc.conv.combinednotes(), mc.bDecode.conv_blob())):
+    for x, _ in enumerate(mc.process_notes(mc.conv.combinednotes(), mc.bDecode.conv_blob()), start=1):
         eel.eelActionedNotes(x) # Update ui note counter
         eel.eelCoinsLeft(mc.ratelimit()) # Update ratelimit coins
     uiconsole("Finished converting notes!")

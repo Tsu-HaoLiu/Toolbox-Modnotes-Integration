@@ -24,7 +24,7 @@ class Converter:
             if not self.wiki_notes: 
                 raise Exception(f"Not authenticated or no information provided.")
             format_name = func(self)
-            logger.info(f"{format_name} file created in current directory")
+            logger.warning(f"{format_name} file created in current directory")
         return f
 
     def combine_json(self):
@@ -36,12 +36,11 @@ class Converter:
     
     @empty_notes
     def json_format(self):
-        self.df.to_json('modnotes/usernotes_json.json')
+        self.df.to_json('usernotes_json.json')
         return "JSON"
     
     @empty_notes
     def csv_format(self):
-        self.df.to_csv('modnotes/usernotes_csv.csv', encoding='utf-8', index=False)
+        self.df.to_csv('usernotes_csv.csv', encoding='utf-8', index=False)
         return "CSV"
-    
     

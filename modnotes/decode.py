@@ -37,7 +37,7 @@ class BlobDecoder:
         
         # sum of values to get total
         note_count = [len(x['ns']) for x in self.cleaned_notes.values()]
-        self.notelength = sum(note_count) - 1
+        self.notelength = sum(note_count)
         
         return self.cleaned_notes
     
