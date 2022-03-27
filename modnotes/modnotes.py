@@ -77,6 +77,7 @@ def create_notes(user, note, action_item: str = None, label: str = None):
     try:
         result = r.request("POST", note_api, data)
         logger.warning(f"Created note for u/{result['created']['user']}")
+        logger.info(f"u/{result['created']['user']} - {result['created']['id']}")
     except Exception as e:
         logger.info(traceback.format_exc())
         logger.warning(f"NoteCreationFailed: u/{user} - {e} skipping...")
@@ -112,7 +113,6 @@ def process_notes(full_notes: dict, notes: dict):
     
     for note_info in note_name_generator(notes):
         for note_gather in note_info[1]['ns']:
-            logger.warning(f"Adding note for: {note_info[0]}")
             try:
                 r.redditor(note_info[0]).id  # api call
                 user_id = r.redditor(note_info[0]).name
