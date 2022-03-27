@@ -25,16 +25,14 @@ _Note: To have the interface displayed in the images, you will need chrome. If c
 
 ### Installation
 
+You can install Modnotes using one of the following methods:
 1. To clone a project, use the command: `git clone https://github.com/Tsu-HaoLiu/Toolbox-Modnotes-Integration.git`
 2. Download the .exe from [GitHub Releases](https://github.com/Tsu-HaoLiu/Toolbox-Modnotes-Integration/releases/tag/v2022.0.12) and install it.
 
 
 #### [PRAW Authenticating via OAuth](https://praw.readthedocs.io/en/stable/getting_started/authentication.html)
   
-**Password Flow** is the simplest type of authentication flow to work with because no
-callback process is involved in obtaining an ``access_token``.
-
-While **password flow** applications do not involve a redirect URI, Reddit still
+**Password flow** applications do not involve a redirect URI, Reddit still
 requires that you provide one when registering your script application --
 ``http://localhost:8080`` is a simple one to use.
 
@@ -47,16 +45,8 @@ information:
 | password  | The password for the Reddit account used to register the application.  |
 | username  | The username of the Reddit account used to register the application.  |
 
-```
-reddit = praw.Reddit(
-    client_id="SI8pN3DSbt0zor",
-    client_secret="xaxkj7HNh8kwg8e5t4m6KvSrbTI",
-    password="hunter2",
-    user_agent="u/USERNAME toolbox to modnotes",
-    username="fakebot3"
-)
-```
-#### [praw.ini alternative](https://praw.readthedocs.io/en/stable/getting_started/configuration/prawini.html#praw-ini)
+
+#### [praw.ini](https://praw.readthedocs.io/en/stable/getting_started/configuration/prawini.html#praw-ini)
 ```
 [DEFAULT]
 client_id=SI8pN3DSbt0zor
@@ -68,7 +58,7 @@ user_agent=/u/USERNAME Toolbox to Modnotes for r/SUBREDDIT
 ```
 
 
-## Usage
+## CLI Usage
 ```
 $ python modnotes.py --help
 usage: modnotes.py [-h] [-ci CLIENT_ID] [-cs CLIENT_SECRET] [-u USERNAME]
