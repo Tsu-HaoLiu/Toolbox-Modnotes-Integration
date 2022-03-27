@@ -1,7 +1,35 @@
-# Toolbox-Modnotes-Integration
-Convert Toolbox Usernotes to Modnotes. Recent announcement of [Modnotes](https://www.reddit.com/r/modnews/comments/t8vafc/announcing_mod_notes/).
+<h1 align="center">Toolbox to Modnotes Integration</h1>
 
-## [PRAW Authenticating via OAuth](https://praw.readthedocs.io/en/stable/getting_started/authentication.html)
+<p align="center">Convert Toolbox's Usernotes to Reddit's Modnotes. Recent announcement of <a href="https://www.reddit.com/r/modnews/comments/t8vafc/announcing_mod_notes/">Modnotes</a></p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/python-v3.9-blue" />
+</p>
+
+## Screenshots
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/96331813/160275505-ed23fe3a-bc39-479f-b73c-1bccbbd48ab0.png" width="333" />
+  <img src="https://user-images.githubusercontent.com/96331813/160275589-febc18c1-13f3-4653-b837-ccd6b58eec20.png" width="333" /> 
+  <img src="https://user-images.githubusercontent.com/96331813/160275510-1778ac4c-8044-4d25-a18a-80f7243aa4ed.png" width="333" />
+</p>
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/96331813/160275513-151548a3-9243-4c5a-9dff-08fe33d74e9a.png" width="500" /> 
+</p>
+
+
+## Getting Started
+
+_Note: To have the interface displayed in the images, you will need chrome. If chrome is not installed the default browser will be used._
+
+### Installation
+
+1. To clone a project, use the command: `git clone https://github.com/Tsu-HaoLiu/Toolbox-Modnotes-Integration.git`
+2. Download the .exe from [GitHub Releases](https://github.com/Tsu-HaoLiu/Toolbox-Modnotes-Integration/releases/tag/v2022.0.12) and install it.
+
+
+#### [PRAW Authenticating via OAuth](https://praw.readthedocs.io/en/stable/getting_started/authentication.html)
   
 **Password Flow** is the simplest type of authentication flow to work with because no
 callback process is involved in obtaining an ``access_token``.
@@ -28,7 +56,7 @@ reddit = praw.Reddit(
     username="fakebot3"
 )
 ```
-### [praw.ini alternative](https://praw.readthedocs.io/en/stable/getting_started/configuration/prawini.html#praw-ini)
+#### [praw.ini alternative](https://praw.readthedocs.io/en/stable/getting_started/configuration/prawini.html#praw-ini)
 ```
 [DEFAULT]
 client_id=SI8pN3DSbt0zor
@@ -38,13 +66,22 @@ password=hunter2
 subreddit=birdswitharms
 user_agent=/u/USERNAME Toolbox to Modnotes for r/SUBREDDIT
 ```
-```
-r = praw.Reddit('DEFAULT')
-```
+
 
 ## Usage
+```
+$ python modnotes.py --help
+usage: modnotes.py [-h] [-ci CLIENT_ID] [-cs CLIENT_SECRET] [-u USERNAME]
+                   [-p PASSWORD] -s SUBREDDIT [-fa FA] [-save SAVE_INFO]
+```
 
-```
-pip3 install -r requirements.txt
-python3 modnotes.py "SUBREDDITNAME"
-```
+| Argument                                                     | Type                | Description                                                                                                                |
+| ------------------------------------------------------------ | ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| -ci, --client_id                    | optional | Your client_id is found in your /prefs/app page.                                               |
+| -cs, --client_secret             | optional            | Your client_secret is found in your /prefs/app page.                                  |
+| -u, --username             | optional            | The Reddit username of the mod account in which you would like to convert toolbox notes to modnotes.|
+| -p, --password | optional            | Provide a configuration file (json) to pre-fill the UI. These can be generated in the settings tab.                        |
+| -s, --subreddit              | required            | The subreddit you want to convert toolbox notes to modnotes.                      |
+| -fa  | optional            | If your account has 2fa enabled you will have to enter the 2FA code. |
+| -save, --save_info  | optional            | If you would like to save your info to a praw.ini file. (Default: False) |
+
