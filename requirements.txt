@@ -1,1 +1,5 @@
-praw
+praw~=7.5.0
+configparser~=5.0.2
+pandas~=1.4.1
+prawcore~=2.3.0
+Eel~=0.12.4
