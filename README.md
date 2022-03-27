@@ -33,23 +33,7 @@ You can install Modnotes using one of the following methods:
 2. Download the .exe from [GitHub Releases](https://github.com/Tsu-HaoLiu/Toolbox-Modnotes-Integration/releases/tag/v2022.0.12) and install it.
 
 
-#### [PRAW Authenticating via OAuth](https://praw.readthedocs.io/en/stable/getting_started/authentication.html)
-  
-**Password flow** applications do not involve a redirect URI, Reddit still
-requires that you provide one when registering your script application --
-``http://localhost:8080`` is a simple one to use.
-
-In order to use a **password flow** application with PRAW you need four pieces of
-information:
-||Description|    
-| ------------- | ------------- |
-| client_id  | The client ID is the 14-character string listed just under “personal use script” for the desired [developed application](https://www.reddit.com/prefs/apps/)  |
-| client_secret  | The client secret is at least a 27-character string listed adjacent to `secret` for the application.  |
-| password  | The password for the Reddit account used to register the application.  |
-| username  | The username of the Reddit account used to register the application.  |
-
-
-#### [praw.ini](https://praw.readthedocs.io/en/stable/getting_started/configuration/prawini.html#praw-ini)
+#### [PRAW Authenticating via OAuth](https://praw.readthedocs.io/en/stable/getting_started/authentication.html) - [praw.ini](https://praw.readthedocs.io/en/stable/getting_started/configuration/prawini.html#praw-ini)
 ```
 [DEFAULT]
 client_id=SI8pN3DSbt0zor
