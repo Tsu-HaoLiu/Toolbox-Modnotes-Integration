@@ -1,6 +1,6 @@
 <h1 align="center">Toolbox to Modnotes Integration</h1>
 
-<p align="center">Convert Toolbox's Usernotes to Reddit's Modnotes. Recent announcement of <a href="https://www.reddit.com/r/modnews/comments/t8vafc/announcing_mod_notes/">Modnotes</a></p>
+<p align="center">Convert Toolbox's Usernotes to Reddit's Modnotes. Recent announcement of <a href="https://www.reddit.com/r/modnews/comments/t8vafc/announcing_mod_notes/">Modnotes.</a></p>
 
 <p align="center">
   <img src="https://img.shields.io/github/v/release/Tsu-HaoLiu/Toolbox-Modnotes-Integration" />
