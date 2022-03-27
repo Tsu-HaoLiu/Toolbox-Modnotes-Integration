@@ -3,7 +3,10 @@
 <p align="center">Convert Toolbox's Usernotes to Reddit's Modnotes. Recent announcement of <a href="https://www.reddit.com/r/modnews/comments/t8vafc/announcing_mod_notes/">Modnotes</a></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/python-v3.9-blue" />
+  <img src="https://img.shields.io/github/v/release/Tsu-HaoLiu/Toolbox-Modnotes-Integration" />
+  <img src="https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue" />
+  <img src="https://img.shields.io/badge/platform-windows-lightgrey" />
+
 </p>
 
 ## Screenshots
