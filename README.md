@@ -11,15 +11,27 @@
 
 ## Screenshots
 
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/96331813/160275505-ed23fe3a-bc39-479f-b73c-1bccbbd48ab0.png" width="250" />
   <img src="https://user-images.githubusercontent.com/96331813/160275589-febc18c1-13f3-4653-b837-ccd6b58eec20.png" width="250" /> 
-  <img src="https://user-images.githubusercontent.com/96331813/160275510-1778ac4c-8044-4d25-a18a-80f7243aa4ed.png" width="250" />
+  <img src="https://user-images.githubusercontent.com/96331813/160275510-1778ac4c-8044-4d25-a18a-80f7243aa4ed.png" width="250" height="360"/>
 </p>
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/96331813/160275513-151548a3-9243-4c5a-9dff-08fe33d74e9a.png" width="500" /> 
 </p>
+
+## Features
+
+- Simple UI
+- Quick Login
+- Easy CSV & JSON export
+- Remember me (praw.ini)
+- Live console
+- Ratelimit tracker
+- Notes tracker
+- Error logging
 
 
 ## Getting Started
