@@ -2,21 +2,24 @@
 
 
 // ------------- Exposed functions -------------
+
+// Update total notes number
 function eelTotalNotes(t) {totalNotes(t);}
 
+// Update notes remaining numbers
 function eelActionedNotes(t) {actionedNotes(t);}
 
 function eelCoinsLeft(c) {coinsleft(c);}
+
+function eelFillForm(l) {fillForm(l);}
+
+function eelupdateBtn() {btnSwitcher();}
 
 function pStartNoteProcess() {eel.startNotes();}
 
 function pRetrieveCSV() {eel.downloadCSV();}
 
 function pRetrieveJSON() {eel.downloadJSON();}
-
-function eelFillForm(l) {fillForm(l);}
-
-function eelupdateBtn() {btnSwitcher();}
 //----------------------------------------------------
 
 
