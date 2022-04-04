@@ -6,9 +6,10 @@
 // Update total notes number
 function eelTotalNotes(t) {totalNotes(t);}
 
-// Update notes remaining numbers
+// Update notes remaining number
 function eelActionedNotes(t) {actionedNotes(t);}
 
+// Update ratelimit usage number
 function eelCoinsLeft(c) {coinsleft(c);}
 
 function eelFillForm(l) {fillForm(l);}
