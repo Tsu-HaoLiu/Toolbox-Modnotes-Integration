@@ -69,7 +69,7 @@ def auth(auth_details: list = None):
                             short_url="https://redd.it",
                             ratelimit_seconds=5,
                             timeout=16
-                            )
+            )
             logger.warning(f"[praw.ini] Successfully logged in as u/{r.user.me().name}")
             
             """If `remember me` is false delete ini file"""
