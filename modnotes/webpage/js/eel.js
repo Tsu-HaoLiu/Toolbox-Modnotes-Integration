@@ -12,14 +12,19 @@ function eelActionedNotes(t) {actionedNotes(t);}
 // Update ratelimit usage number
 function eelCoinsLeft(c) {coinsleft(c);}
 
+// Fill login form with ini info
 function eelFillForm(l) {fillForm(l);}
 
+// Once authenticated update the grayed out buttons
 function eelupdateBtn() {btnSwitcher();}
 
+// Start creating notes
 function pStartNoteProcess() {eel.startNotes();}
 
+// Create a CSV file with usernotes
 function pRetrieveCSV() {eel.downloadCSV();}
 
+// Create a JSON file with usernotes
 function pRetrieveJSON() {eel.downloadJSON();}
 //----------------------------------------------------
 
