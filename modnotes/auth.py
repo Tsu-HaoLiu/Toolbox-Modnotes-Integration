@@ -73,7 +73,7 @@ def auth(auth_details: list = None):
             )
             logger.warning(f"[praw.ini] Successfully logged in as u/{r.user.me().name}")
             
-            """If `remember me` is false delete ini file"""
+            # If `remember me` is false delete ini file
             if not auth_details[-1]:
                 burn_everything()
             
