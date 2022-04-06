@@ -27,7 +27,6 @@ bDecode = BlobDecoder()
 def OAuth(auth_details: list):
     global r
     r = auth(auth_details)
-    return r
     
     
 def ratelimit():
