@@ -35,22 +35,22 @@ def uiconsole(text):
 
 def logger_console():
     """init logger to display on ui"""
-    module_logger = logging.getLogger('modnotes')
-    module_logger.setLevel(logging.DEBUG)
+    logger = logging.getLogger('modnotes')
+    logger.setLevel(logging.DEBUG)
     
     # Log into ui textarea
     handler = logging.StreamHandler(ForwardToFunctionStream(uiconsole))
     handler.setFormatter(logging.Formatter('%(message)s'))
     handler.setLevel(logging.WARNING)
+    logger.addHandler(handler)
     
     # Catch errors in log files for future debugging
     file_handler = RotatingFileHandler('_logs.log', maxBytes=15*1024*1024, backupCount=10)
     file_handler.setFormatter(logging.Formatter('[%(asctime)s] %(message)s', datefmt='%Y-%m-%d %I:%M:%S%p'))
     file_handler.setLevel(logging.INFO)
+    logger.addHandler(file_handler)
 
-    module_logger.addHandler(file_handler)
-    module_logger.addHandler(handler)
-    module_logger.warning("Welcome! Fill out your info above and click the \"login\" button to get started!")
+    logger.warning("Welcome! Fill out your info above and click the \"login\" button to get started!")
 
 
 def error_catcher(func):
