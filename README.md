@@ -31,7 +31,7 @@
 - Live console
 - Ratelimit tracker
 - Notes tracker
-- Error logging
+- Error logging (Local)
 
 
 ## Getting Started
