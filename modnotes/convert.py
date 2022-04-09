@@ -7,7 +7,7 @@ logger = logging.getLogger('modnotes')
 
 
 class Converter:
-    def __init__(self) -> None:
+    def __init__(self):
         self.wiki_notes = dict()
         self.cleaned_usernotes = dict()
         self.combined_notes = dict()
