@@ -58,7 +58,7 @@ user_agent=/u/USERNAME Toolbox to Modnotes for r/SUBREDDIT
 
 
 ## CLI Usage
-```
+```python
 $ python3 modnotes.py --help
 usage: modnotes.py [-h] [-ci CLIENT_ID] [-cs CLIENT_SECRET] [-u USERNAME]
                    [-p PASSWORD] -s SUBREDDIT [-fa FA] [-save SAVE_INFO]
