@@ -63,7 +63,7 @@ $ python3 modnotes.py --help
 usage: modnotes.py [-h] [-ci CLIENT_ID] [-cs CLIENT_SECRET] [-u USERNAME]
                    [-p PASSWORD] -s SUBREDDIT [-fa FA] [-save SAVE_INFO]
 ```
-
+ 
 | Argument                                                     | Type                | Description                                                                                                                |
 | ------------------------------------------------------------ | ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | -ci, --client_id                    | optional | Your client_id is found in your /prefs/app page.                                               |
